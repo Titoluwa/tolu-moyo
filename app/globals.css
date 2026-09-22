@@ -1,26 +1,142 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --lilac: #cea2fd;
+  --lilac-tint: #f6edff;
+  --lilac-deep: #9d6cd6;
+  --sage: #87ae73;
+  --sage-tint: #eef3ea;
+  --sage-deep: #5e8049;
+  --blue: #4166f5;
+  --blue-deep: #2c48c9;
+  --cream: #fafaf9;
+  --ink: #1e1e24;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans), sans-serif;
+}
+
+.font-serif-display {
+  font-family: var(--font-serif), serif;
+}
+
+h1,
+h2,
+h3,
+.serif {
+  font-family: var(--font-serif), serif;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* focus visibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* hero entrance */
+.hero-rise {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: riseIn 0.9s ease forwards;
+}
+.hero-rise.d1 {
+  animation-delay: 0.05s;
+}
+.hero-rise.d2 {
+  animation-delay: 0.2s;
+}
+.hero-rise.d3 {
+  animation-delay: 0.35s;
+}
+.hero-rise.d4 {
+  animation-delay: 0.5s;
+}
+@keyframes riseIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* timeline connector for schedule */
+.timeline-rail {
+  position: relative;
+}
+.timeline-rail::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 2px;
+  background: linear-gradient(var(--lilac), var(--sage));
+}
+@media (min-width: 768px) {
+  .timeline-rail::before {
+    left: 50%;
+    transform: translateX(-1px);
+  }
+}
+
+.swatch {
+  width: 100%;
+  aspect-ratio: 1/1;
+  border-radius: 2px;
+}
+
+/* gallery masonry */
+.masonry {
+  column-count: 1;
+  column-gap: 1rem;
+}
+@media (min-width: 640px) {
+  .masonry {
+    column-count: 2;
+  }
+}
+@media (min-width: 1024px) {
+  .masonry {
+    column-count: 3;
+  }
+}
+.masonry > div {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
+
+.num-cell {
+  font-variant-numeric: tabular-nums;
+}
+
+.modal-enter {
+  animation: modalIn 0.35s ease forwards;
+}
+@keyframes modalIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

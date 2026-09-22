@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Aderonke &amp; Adediwura — #MeetTheAdebanjos</title>
+<meta name="description" content="Join Aderonke &amp; Adediwura as they become the Adebanjos. RSVP, event schedule, aso-ebi details and more." />
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --lilac:#c8b6e2;
+    --lilac-tint:#f3eefa;
+    --lilac-deep:#a186c6;
+    --sage:#87ae73;
+    --sage-tint:#eef3ea;
+    --sage-deep:#5e8049;
+    --blue:#4166f5;
+    --blue-deep:#2c48c9;
+    --cream:#FAFAF9;
+    --ink:#1E1E24;
+  }
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Plus Jakarta Sans', sans-serif;
+  }
+  .font-serif-display{font-family:'Cormorant Garamond', serif;}
+  h1,h2,h3,.serif{font-family:'Cormorant Garamond', serif;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible{
+    outline:2px solid var(--blue);
+    outline-offset:2px;
+  }
+
+  /* hero entrance — single orchestrated moment */
+  .hero-rise{opacity:0; transform:translateY(14px); animation:riseIn 0.9s ease forwards;}
+  .hero-rise.d1{animation-delay:.05s;}
+  .hero-rise.d2{animation-delay:.2s;}
+  .hero-rise.d3{animation-delay:.35s;}
+  .hero-rise.d4{animation-delay:.5s;}
+  @keyframes riseIn{to{opacity:1; transform:translateY(0);}}
+
+  /* timeline connector for schedule */
+  .timeline-rail{
+    position:relative;
+  }
+  .timeline-rail::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0.6rem;
+    bottom:0.6rem;
+    width:2px;
+    background:linear-gradient(var(--lilac), var(--sage));
+  }
+  @media (min-width:768px){
+    .timeline-rail::before{left:50%; transform:translateX(-1px);}
+  }
+
+  .swatch{
+    width:100%;
+    aspect-ratio:1/1;
+    border-radius:2px;
+  }
+
+  .copy-btn[data-copied="true"] .copy-label::after{
+    content:"Copied";
+  }
+
+  /* gallery masonry via CSS columns */
+  .masonry{column-count:1; column-gap:1rem;}
+  @media (min-width:640px){.masonry{column-count:2;}}
+  @media (min-width:1024px){.masonry{column-count:3;}}
+  .masonry > div{break-inside:avoid; margin-bottom:1rem;}
+
+  .num-cell{font-variant-numeric:tabular-nums;}
+
+  .modal-enter{animation:modalIn .35s ease forwards;}
+  @keyframes modalIn{from{opacity:0; transform:scale(.96);} to{opacity:1; transform:scale(1);}}
+</style>
+</head>
+
+<body class="antialiased">
+
+<!-- ============ NAV ============ -->
+<header class="fixed top-0 inset-x-0 z-40 bg-[--cream]/90 backdrop-blur border-b border-black/5">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+    <a href="#top" class="serif text-lg tracking-tight" style="color:var(--ink)">A &amp; A</a>
+    <nav class="hidden md:flex items-center gap-8 text-sm">
+      <a href="#story" class="hover:text-[--blue] transition-colors">Our Story</a>
+      <a href="#schedule" class="hover:text-[--blue] transition-colors">Schedule</a>
+      <a href="#aso-ebi" class="hover:text-[--blue] transition-colors">Aso-Ebi</a>
+      <a href="#gallery" class="hover:text-[--blue] transition-colors">Gallery</a>
+      <a href="#gifts" class="hover:text-[--blue] transition-colors">Gifts</a>
+    </nav>
+    <a href="#rsvp" class="text-sm font-semibold px-4 py-2 rounded-sm text-white" style="background:var(--blue)">RSVP</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative pt-16 md:pt-0 grid md:grid-cols-2 min-h-[92vh] md:min-h-screen">
+  <div class="order-2 md:order-1 flex flex-col justify-center px-6 sm:px-10 md:px-16 py-14 md:py-0">
+    <p class="hero-rise d1 text-xs font-semibold tracking-wide" style="color:var(--sage-deep)">Together with their families</p>
+    <h1 class="hero-rise d2 serif mt-4 text-5xl sm:text-6xl lg:text-7xl leading-[0.95]" style="color:var(--ink)">
+      Aderonke <span class="italic" style="color:var(--blue)">&amp;</span><br/>Adediwura
+    </h1>
+    <p class="hero-rise d3 mt-6 text-base sm:text-lg max-w-md" style="color:var(--ink)/80">
+      We're becoming the Adebanjos, and we'd love for you to be part of it — traditional engagement, church, and the party after.
+    </p>
+    <p class="hero-rise d3 mt-3 serif italic text-lg" style="color:var(--lilac-deep)">#MeetTheAdebanjos</p>
+
+    <!-- countdown -->
+    <div id="countdown" class="hero-rise d4 mt-10 flex gap-6 sm:gap-10">
+      <div><div id="cd-days" class="num-cell text-3xl sm:text-4xl font-semibold" style="color:var(--blue)">00</div><div class="text-xs mt-1 opacity-70">Days</div></div>
+      <div><div id="cd-hours" class="num-cell text-3xl sm:text-4xl font-semibold" style="color:var(--blue)">00</div><div class="text-xs mt-1 opacity-70">Hours</div></div>
+      <div><div id="cd-mins" class="num-cell text-3xl sm:text-4xl font-semibold" style="color:var(--blue)">00</div><div class="text-xs mt-1 opacity-70">Minutes</div></div>
+      <div><div id="cd-secs" class="num-cell text-3xl sm:text-4xl font-semibold" style="color:var(--blue)">00</div><div class="text-xs mt-1 opacity-70">Seconds</div></div>
+    </div>
+
+    <div class="hero-rise d4 mt-10">
+      <a href="#rsvp" class="inline-block px-7 py-3.5 rounded-sm text-white font-semibold" style="background:var(--blue)">RSVP Now</a>
+    </div>
+  </div>
+
+  <div class="order-1 md:order-2 relative min-h-[46vh] md:min-h-0">
+    <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80"
+         alt="Aderonke and Adediwura"
+         class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0" style="background:linear-gradient(180deg, rgba(30,30,36,0) 55%, rgba(30,30,36,.35) 100%)"></div>
+  </div>
+</section>
+
+<!-- ============ OUR STORY ============ -->
+<section id="story" class="max-w-6xl mx-auto px-6 sm:px-10 py-24 md:py-32">
+  <h2 class="serif text-4xl sm:text-5xl" style="color:var(--ink)">Our Story</h2>
+  <p class="mt-3 max-w-lg opacity-75">Three moments that brought us here.</p>
+
+  <div class="mt-16 grid md:grid-cols-3 gap-12 md:gap-8">
+    <div>
+      <div class="aspect-[4/5] overflow-hidden rounded-sm">
+        <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=700&q=80" alt="How Aderonke and Adediwura met" class="w-full h-full object-cover"/>
+      </div>
+      <h3 class="serif text-2xl mt-5" style="color:var(--blue)">How We Met</h3>
+      <p class="mt-2 text-sm leading-relaxed opacity-80">A mutual friend's birthday dinner in Lekki, a seat that happened to be free next to his, and a conversation about jollof that ran three hours too long.</p>
+    </div>
+    <div class="md:mt-14">
+      <div class="aspect-[4/5] overflow-hidden rounded-sm">
+        <img src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=700&q=80" alt="The proposal" class="w-full h-full object-cover"/>
+      </div>
+      <h3 class="serif text-2xl mt-5" style="color:var(--sage-deep)">The Proposal</h3>
+      <p class="mt-2 text-sm leading-relaxed opacity-80">A quiet Sunday walk at the Lekki Conservation Centre turned into the loudest yes, with both families waiting — not so secretly — just around the corner.</p>
+    </div>
+    <div>
+      <div class="aspect-[4/5] overflow-hidden rounded-sm">
+        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=700&q=80" alt="Road to forever" class="w-full h-full object-cover"/>
+      </div>
+      <h3 class="serif text-2xl mt-5" style="color:var(--lilac-deep)">Road to Forever</h3>
+      <p class="mt-2 text-sm leading-relaxed opacity-80">Two families, one aso-ebi group chat, and a wedding list that keeps growing — all leading to the day we finally become the Adebanjos.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SCHEDULE ============ -->
+<section id="schedule" class="py-24 md:py-32" style="background:var(--lilac-tint)">
+  <div class="max-w-4xl mx-auto px-6 sm:px-10">
+    <h2 class="serif text-4xl sm:text-5xl" style="color:var(--ink)">The Schedule</h2>
+    <p class="mt-3 max-w-lg opacity-75">Two days, four moments — join us for as many as you can.</p>
+
+    <div class="timeline-rail mt-16 space-y-16">
+
+      <!-- Trad -->
+      <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start pl-8 md:pl-0">
+        <div class="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-1.5 w-3 h-3 rounded-full" style="background:var(--sage)"></div>
+        <div class="md:text-right md:pr-10">
+          <p class="text-xs font-semibold tracking-wide" style="color:var(--sage-deep)">Friday · 18 December 2026 · 4:00 PM</p>
+          <h3 class="serif text-3xl mt-1">Traditional Engagement</h3>
+        </div>
+        <div class="mt-3 md:mt-0 md:pl-10">
+          <p class="text-sm opacity-80">The Balmoral Events Centre, Ikeja, Lagos</p>
+          <p class="text-sm opacity-80 mt-1">Aso-ebi: Sage Green &amp; Lilac. See the full palette below.</p>
+          <div class="flex gap-2 mt-3">
+            <span class="swatch !w-8 !h-8" style="background:var(--sage)"></span>
+            <span class="swatch !w-8 !h-8" style="background:var(--lilac)"></span>
+          </div>
+          <button onclick="addToCalendar('Traditional Engagement — Adebanjo Wedding','20261211T150000Z','20261211T190000Z','The Balmoral Events Centre, Ikeja, Lagos')"
+            class="mt-4 text-xs font-semibold px-4 py-2 rounded-sm border" style="border-color:var(--sage-deep); color:var(--sage-deep)">
+            Add to Google Calendar
+          </button>
+        </div>
+      </div>
+
+      <!-- Church -->
+      <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start pl-8 md:pl-0">
+        <div class="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-1.5 w-3 h-3 rounded-full" style="background:var(--blue)"></div>
+        <div class="md:text-right md:pr-10">
+          <p class="text-xs font-semibold tracking-wide" style="color:var(--blue)">Saturday · 19 December 2026 · 10:00 AM</p>
+          <h3 class="serif text-3xl mt-1">Church Ceremony</h3>
+        </div>
+        <div class="mt-3 md:mt-0 md:pl-10">
+          <p class="text-sm opacity-80">House on the Rock, Lekki, Lagos</p>
+          <p class="text-sm opacity-80 mt-1">White wedding attire — come as you are, no aso-ebi required.</p>
+          <button onclick="addToCalendar('Church Ceremony — Adebanjo Wedding','20261212T090000Z','20261212T110000Z','House on the Rock, Lekki, Lagos')"
+            class="mt-4 text-xs font-semibold px-4 py-2 rounded-sm border" style="border-color:var(--blue); color:var(--blue)">
+            Add to Google Calendar
+          </button>
+        </div>
+      </div>
+
+      <!-- Reception -->
+      <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start pl-8 md:pl-0">
+        <div class="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-1.5 w-3 h-3 rounded-full" style="background:var(--blue)"></div>
+        <div class="md:text-right md:pr-10">
+          <p class="text-xs font-semibold tracking-wide" style="color:var(--blue)">Saturday · 19 December 2026 · 1:00 PM</p>
+          <h3 class="serif text-3xl mt-1">Reception</h3>
+        </div>
+        <div class="mt-3 md:mt-0 md:pl-10">
+          <p class="text-sm opacity-80">Eko Convention Centre, Victoria Island, Lagos</p>
+          <p class="text-sm opacity-80 mt-1">Aso-ebi: Ultramarine Blue accent, worn however you like.</p>
+          <button onclick="addToCalendar('Reception — Adebanjo Wedding','20261212T120000Z','20261212T170000Z','Eko Convention Centre, Victoria Island, Lagos')"
+            class="mt-4 text-xs font-semibold px-4 py-2 rounded-sm border" style="border-color:var(--blue); color:var(--blue)">
+            Add to Google Calendar
+          </button>
+        </div>
+      </div>
+
+      <!-- After-party -->
+      <div class="relative md:grid md:grid-cols-2 md:gap-10 items-start pl-8 md:pl-0">
+        <div class="absolute left-[-5px] md:left-1/2 md:-translate-x-1/2 top-1.5 w-3 h-3 rounded-full" style="background:var(--lilac-deep)"></div>
+        <div class="md:text-right md:pr-10">
+          <p class="text-xs font-semibold tracking-wide" style="color:var(--lilac-deep)">Saturday · 12 December 2026 · 7:00 PM</p>
+          <h3 class="serif text-3xl mt-1">After-Party</h3>
+        </div>
+        <div class="mt-3 md:mt-0 md:pl-10">
+          <p class="text-sm opacity-80">The Rooftop, Victoria Island, Lagos</p>
+          <p class="text-sm opacity-80 mt-1">Dancing shoes, not aso-ebi.</p>
+          <button onclick="addToCalendar('After-Party — Adebanjo Wedding','20261212T180000Z','20261212T220000Z','The Rooftop, Victoria Island, Lagos')"
+            class="mt-4 text-xs font-semibold px-4 py-2 rounded-sm border" style="border-color:var(--lilac-deep); color:var(--lilac-deep)">
+            Add to Google Calendar
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ ASO-EBI ============ -->
+<section id="aso-ebi" class="max-w-6xl mx-auto px-6 sm:px-10 py-24 md:py-32">
+  <h2 class="serif text-4xl sm:text-5xl" style="color:var(--ink)">Aso-Ebi &amp; Dress Code</h2>
+  <p class="mt-3 max-w-lg opacity-75">Wear the colour of the family you're standing with — or the blue if you're standing with us both.</p>
+
+  <div class="mt-16 grid md:grid-cols-3 gap-10">
+    <div>
+      <div class="grid grid-cols-3 gap-1.5">
+        <span class="swatch" style="background:#c8b6e2"></span>
+        <span class="swatch" style="background:#dccbef"></span>
+        <span class="swatch" style="background:#a186c6"></span>
+      </div>
+      <h3 class="serif text-2xl mt-4">Bride's Family</h3>
+      <p class="text-sm opacity-80 mt-1">Lilac, in any shade — lace, aso-oke or plain.</p>
+    </div>
+    <div>
+      <div class="grid grid-cols-3 gap-1.5">
+        <span class="swatch" style="background:#87ae73"></span>
+        <span class="swatch" style="background:#a9c99a"></span>
+        <span class="swatch" style="background:#5e8049"></span>
+      </div>
+      <h3 class="serif text-2xl mt-4">Groom's Family</h3>
+      <p class="text-sm opacity-80 mt-1">Sage green, in any shade — same guidance as above.</p>
+    </div>
+    <div>
+      <div class="grid grid-cols-3 gap-1.5">
+        <span class="swatch" style="background:#4166f5"></span>
+        <span class="swatch" style="background:#7d97f8"></span>
+        <span class="swatch" style="background:#2c48c9"></span>
+      </div>
+      <h3 class="serif text-2xl mt-4">Friends &amp; Guests</h3>
+      <p class="text-sm opacity-80 mt-1">A touch of ultramarine blue — an accessory, agbada or gown.</p>
+    </div>
+  </div>
+
+  <div class="mt-14 p-6 sm:p-8 rounded-sm" style="background:var(--sage-tint)">
+    <h3 class="serif text-xl">Aso-Ebi Package &amp; Fabric</h3>
+    <p class="text-sm mt-2 opacity-80">Fabric and cap/gele packages are available for collection ahead of the trad. For enquiries and payment details, reach out to:</p>
+    <p class="text-sm mt-2 font-semibold">Aunty Yemi (Aso-Ebi Coordinator) — WhatsApp +234 801 234 5678</p>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery" class="py-24 md:py-32" style="background:var(--ink)">
+  <div class="max-w-6xl mx-auto px-6 sm:px-10">
+    <h2 class="serif text-4xl sm:text-5xl text-white">Pre-Wedding Gallery</h2>
+    <p class="mt-3 max-w-lg text-white/60">A few of our favourites from the shoot.</p>
+
+    <div class="masonry mt-14">
+      <div><img class="w-full rounded-sm" src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?auto=format&fit=crop&w=700&q=80" alt="Aderonke and Adediwura pre-wedding"/></div>
+      <div><img class="w-full rounded-sm" src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=700&q=80" alt="Pre-wedding shoot"/></div>
+      <div><img class="w-full rounded-sm" src="https://images.unsplash.com/photo-1520854221256-17451cc331bf?auto=format&fit=crop&w=700&q=80" alt="Pre-wedding shoot"/></div>
+      <div><img class="w-full rounded-sm" src="https://images.unsplash.com/photo-1509927083803-4bd519298ac4?auto=format&fit=crop&w=700&q=80" alt="Pre-wedding shoot"/></div>
+      <div><img class="w-full rounded-sm" src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=700&q=80" alt="Pre-wedding shoot"/></div>
+      <div><img class="w-full rounded-sm" src="https://images.unsplash.com/photo-1550005809-91ad75fb315f?auto=format&fit=crop&w=700&q=80" alt="Pre-wedding shoot"/></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GIFTS ============ -->
+<section id="gifts" class="max-w-4xl mx-auto px-6 sm:px-10 py-24 md:py-32">
+  <h2 class="serif text-4xl sm:text-5xl" style="color:var(--ink)">Gift Registry</h2>
+  <p class="mt-4 max-w-lg opacity-80 text-sm leading-relaxed">Your presence is the gift we're most looking forward to. If you'd like to bless us further, cash gifts are warmly welcome — see the details below.</p>
+
+  <div class="mt-10 max-w-sm rounded-sm p-7 text-white relative overflow-hidden" style="background:linear-gradient(135deg, var(--blue), var(--blue-deep))">
+    <div class="absolute -right-8 -top-8 w-32 h-32 rounded-full" style="background:rgba(255,255,255,.08)"></div>
+    <p class="text-xs tracking-wide opacity-80">Account Name</p>
+    <p class="serif text-xl mt-0.5">Adediwura &amp; Aderonke</p>
+    <p class="text-xs tracking-wide opacity-80 mt-5">Account Number</p>
+    <div class="flex items-center justify-between mt-0.5">
+      <p id="acct-number" class="text-2xl font-semibold tracking-wider">0123456789</p>
+      <button id="copy-btn" onclick="copyAccountNumber()" class="copy-btn text-xs font-semibold px-3 py-1.5 rounded-sm" style="background:rgba(255,255,255,.15)">
+        <span class="copy-label">Copy</span>
+      </button>
+    </div>
+    <p class="text-xs tracking-wide opacity-80 mt-5">Bank</p>
+    <p class="text-sm mt-0.5">Guaranty Trust Bank (GTB)</p>
+  </div>
+</section>
+
+<!-- ============ RSVP ============ -->
+<section id="rsvp" class="py-24 md:py-32" style="background:var(--lilac-tint)">
+  <div class="max-w-2xl mx-auto px-6 sm:px-10">
+    <h2 class="serif text-4xl sm:text-5xl" style="color:var(--ink)">RSVP</h2>
+    <p class="mt-3 opacity-75">Kindly reply by 20 November 2026 so we can plan properly.</p>
+
+    <form id="rsvp-form" class="mt-12 space-y-6">
+
+      <div>
+        <label for="fullName" class="block text-sm font-semibold mb-1.5">Full Name</label>
+        <input required id="fullName" name="fullName" type="text" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]" />
+      </div>
+
+      <div class="grid sm:grid-cols-2 gap-6">
+        <div>
+          <label for="whatsapp" class="block text-sm font-semibold mb-1.5">WhatsApp Number</label>
+          <input required id="whatsapp" name="whatsapp" type="tel" placeholder="+234 8xx xxx xxxx" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]" />
+        </div>
+        <div>
+          <label for="email" class="block text-sm font-semibold mb-1.5">Email Address</label>
+          <input required id="email" name="email" type="email" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]" />
+        </div>
+      </div>
+
+      <div>
+        <label for="attending" class="block text-sm font-semibold mb-1.5">Attending</label>
+        <select required id="attending" name="attending" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]">
+          <option value="">Select an option</option>
+          <option>Traditional Wedding</option>
+          <option>White Wedding</option>
+          <option>Both Events</option>
+          <option>Regretfully Decline</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="plusOnes" class="block text-sm font-semibold mb-1.5">Plus-One Count</label>
+        <select id="plusOnes" name="plusOnes" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </div>
+
+      <div id="plusOneNamesWrap" class="space-y-3 hidden">
+        <div>
+          <label for="plusOneName1" class="block text-sm font-semibold mb-1.5">Plus-One Name</label>
+          <input id="plusOneName1" name="plusOneName1" type="text" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]" />
+        </div>
+        <div id="plusOneName2Wrap" class="hidden">
+          <label for="plusOneName2" class="block text-sm font-semibold mb-1.5">Second Plus-One Name</label>
+          <input id="plusOneName2" name="plusOneName2" type="text" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]" />
+        </div>
+      </div>
+
+      <div>
+        <label for="meal" class="block text-sm font-semibold mb-1.5">Meal Preference</label>
+        <select required id="meal" name="meal" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]">
+          <option value="">Select an option</option>
+          <option>Jollof &amp; Small Chops</option>
+          <option>Ofada Special</option>
+          <option>Pounded Yam &amp; Egusi</option>
+          <option>Vegetarian</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="songRequest" class="block text-sm font-semibold mb-1.5">DJ Song Request</label>
+        <input id="songRequest" name="songRequest" type="text" placeholder="What will get you on the dance floor?" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]" />
+      </div>
+
+      <div>
+        <label for="message" class="block text-sm font-semibold mb-1.5">Message / Prayers for Aderonke &amp; Adediwura</label>
+        <textarea id="message" name="message" rows="4" class="w-full px-4 py-3 rounded-sm border border-black/10 bg-white focus:border-[--blue]"></textarea>
+      </div>
+
+      <button id="submitBtn" type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-sm text-white font-semibold" style="background:var(--blue)">
+        <svg id="spinner" class="hidden animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"></path></svg>
+        <span id="submitLabel">Send RSVP</span>
+      </button>
+      <p id="formError" class="text-sm hidden" style="color:#b34747">Something went wrong — please try again, or reach us on WhatsApp.</p>
+    </form>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="py-14 text-center">
+  <p class="serif text-2xl" style="color:var(--ink)">Aderonke &amp; Adediwura</p>
+  <p class="mt-2 text-sm opacity-60">#MeetTheAdebanjos &nbsp;·&nbsp; #TM26 &nbsp;·&nbsp; #AdedTogether26 &nbsp;·&nbsp; #RonkeFoundHerDiwura &nbsp;·&nbsp; #ToluMoyoForever</p>
+  <p class="mt-6 text-xs opacity-40">19 December 2026 · Lagos, Nigeria</p>
+</footer>
+
+<!-- ============ SUCCESS MODAL ============ -->
+<div id="successModal" class="hidden fixed inset-0 z-50 flex items-center justify-center p-6" style="background:rgba(30,30,36,.55)">
+  <div class="modal-enter bg-white rounded-sm max-w-sm w-full p-8 text-center">
+    <div class="mx-auto w-12 h-12 rounded-full flex items-center justify-center" style="background:var(--sage-tint)">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--sage-deep)" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+    </div>
+    <h3 class="serif text-2xl mt-5">Thank you!</h3>
+    <p class="text-sm mt-2 opacity-75">Your RSVP has been received. We can't wait to celebrate with you.</p>
+    <button onclick="closeModal()" class="mt-6 px-6 py-2.5 rounded-sm text-white font-semibold text-sm" style="background:var(--blue)">Close</button>
+  </div>
+</div>
+
+<script>
+  /* ---------- Countdown ---------- */
+  var WEDDING_DATE = new Date("2026-12-18T09:00:00+01:00").getTime();
+  function updateCountdown(){
+    var now = Date.now();
+    var diff = WEDDING_DATE - now;
+    if(diff < 0){ diff = 0; }
+    var d = Math.floor(diff/(1000*60*60*24));
+    var h = Math.floor((diff%(1000*60*60*24))/(1000*60*60));
+    var m = Math.floor((diff%(1000*60*60))/(1000*60));
+    var s = Math.floor((diff%(1000*60))/1000);
+    document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+    document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  /* ---------- Add to Google Calendar ---------- */
+  function addToCalendar(title, startUTC, endUTC, location){
+    var url = "https://calendar.google.com/calendar/render?action=TEMPLATE"
+      + "&text=" + encodeURIComponent(title)
+      + "&dates=" + startUTC + "/" + endUTC
+      + "&location=" + encodeURIComponent(location)
+      + "&details=" + encodeURIComponent("Join us! " + title);
+    window.open(url, "_blank");
+  }
+
+  /* ---------- Copy account number ---------- */
+  function copyAccountNumber(){
+    var number = document.getElementById('acct-number').textContent.trim();
+    var btn = document.getElementById('copy-btn');
+    function done(){
+      btn.dataset.copied = 'true';
+      btn.querySelector('.copy-label').textContent = 'Copied';
+      setTimeout(function(){
+        delete btn.dataset.copied;
+        btn.querySelector('.copy-label').textContent = 'Copy';
+      }, 2000);
+    }
+    if(navigator.clipboard && window.isSecureContext){
+      navigator.clipboard.writeText(number).then(done).catch(function(){ fallbackCopy(number, done); });
+    } else {
+      fallbackCopy(number, done);
+    }
+  }
+  function fallbackCopy(text, cb){
+    var ta = document.createElement('textarea');
+    ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    ta.remove();
+    cb();
+  }
+
+  /* ---------- Plus-one dynamic fields ---------- */
+  var plusOnesSelect = document.getElementById('plusOnes');
+  var wrap = document.getElementById('plusOneNamesWrap');
+  var wrap2 = document.getElementById('plusOneName2Wrap');
+  plusOnesSelect.addEventListener('change', function(){
+    var val = Number.parseInt(this.value, 10);
+    wrap.classList.toggle('hidden', val < 1);
+    wrap2.classList.toggle('hidden', val < 2);
+  });
+
+  /* ---------- RSVP submission -> Google Sheets ---------- */
+  // Replace with your deployed Google Apps Script Web App URL (see Code.gs + deployment steps).
+  var GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec";
+
+  var form = document.getElementById('rsvp-form');
+  var submitBtn = document.getElementById('submitBtn');
+  var spinner = document.getElementById('spinner');
+  var submitLabel = document.getElementById('submitLabel');
+  var formError = document.getElementById('formError');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(submitBtn.disabled) return;
+
+    var payload = {
+      timestamp: new Date().toISOString(),
+      fullName: form.fullName.value.trim(),
+      whatsapp: form.whatsapp.value.trim(),
+      email: form.email.value.trim(),
+      attending: form.attending.value,
+      plusOnes: form.plusOnes.value,
+      plusOneName1: form.plusOneName1.value.trim(),
+      plusOneName2: form.plusOneName2.value.trim(),
+      meal: form.meal.value,
+      songRequest: form.songRequest.value.trim(),
+      message: form.message.value.trim()
+    };
+
+    submitBtn.disabled = true;
+    spinner.classList.remove('hidden');
+    submitLabel.textContent = 'Sending…';
+    formError.classList.add('hidden');
+
+    // Apps Script Web Apps generally require mode: 'no-cors' from the browser,
+    // which means the response body can't be read — so success is optimistic
+    // once the request completes without a network-level error.
+    fetch(GOOGLE_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    })
+    .then(function(){
+      form.reset();
+      wrap.classList.add('hidden');
+      wrap2.classList.add('hidden');
+      openModal();
+    })
+    .catch(function(){
+      formError.classList.remove('hidden');
+    })
+    .finally(function(){
+      submitBtn.disabled = false;
+      spinner.classList.add('hidden');
+      submitLabel.textContent = 'Send RSVP';
+    });
+  });
+
+  function openModal(){
+    document.getElementById('successModal').classList.remove('hidden');
+  }
+  function closeModal(){
+    document.getElementById('successModal').classList.add('hidden');
+  }
+</script>
+
+</body>
+</html>
