@@ -59,14 +59,14 @@ export default function ToluMoyoNavbar() {
             Schedule
           </a>
         </li> */}
-        <li>
+        {/* <li>
           <a
             href="#gallery"
             className="transition-colors hover:text-[#D4AF37]"
           >
             Gallery
           </a>
-        </li>
+        </li> */}
         <li>
           <a
             href="#registry"
@@ -123,13 +123,13 @@ export default function ToluMoyoNavbar() {
           >
             Schedule
           </a> */}
-          <a
+         {/*  <a
             href="#gallery"
             onClick={() => setMenuOpen(false)}
             className="py-1 hover:text-[#722F37]"
           >
             Gallery
-          </a>
+          </a> */}
           <a
             href="#registry"
             onClick={() => setMenuOpen(false)}
