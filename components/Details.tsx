@@ -92,7 +92,7 @@ export default function ToluMoyoDetails() {
               Dress Code
             </p>
             <p className="mt-1 text-sm font-medium sm:text-base text-[#722F37]">
-              Champagne Gold & Wine
+              {TOLU_MOYO_CONFIG.details.dressCode}
              {/*  <br />
               <span className="text-[#722F37]">English Wear or Traditional Outfit</span> */}
             </p>

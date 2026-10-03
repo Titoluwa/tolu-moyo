@@ -38,7 +38,7 @@ export function ThankYouMail({
                         <td style="background: linear-gradient(135deg, #2D0C14 0%, #3D121B 60%, #1F070C 100%); padding: 40px 30px; text-align: center; color: #ffffff;">
                         <p style="margin: 0 0 10px 0; font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #DFBA73;">Wedding RSVP Confirmation</p>
                         <h1 style="margin: 0 0 10px 0; font-size: 32px; font-weight: 400; font-family: Georgia, serif; color: #ffffff;">Toluwani &amp; Moyosore</h1>
-                        <p style="margin: 0; font-size: 14px; opacity: 0.85; letter-spacing: 1px;">#TM26 &bull; #MeetTheAdebanjo2026</p>
+                        <p style="margin: 0; font-size: 14px; opacity: 0.85; letter-spacing: 1px;">#TM26 &bull; #MeetTheAdebanjos™️</p>
                         </td>
                     </tr>
                     <!-- Body -->
@@ -97,6 +97,6 @@ export function textcontent({ name, greetingMessage, isAttending, isMaybe, hasPl
 
         With love,
         Toluwani & Moyosore Adebanjo
-        #TM26 #MeetTheAdebanjo2026
+        #TM26 #MeetTheAdebanjos™️
         `.trim();
 }

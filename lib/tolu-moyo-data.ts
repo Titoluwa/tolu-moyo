@@ -19,7 +19,7 @@ export const TOLU_MOYO_CONFIG = {
     logo2: "/logo/TM-logo-white.png",
     eyebrow: "You are invited to celebrate",
     tagline: "We're Getting Married 💍",
-    hashtag: "#TM26 #MeetTheAdebanjo2026",
+    hashtag: "#TM26 #MeetTheAdebanjos™️",
     weddingDateText: "19th December 2026",
     locationText: "Ile-Ife, Osun State, Nigeria",
     isoTargetDate: "2026-12-19T10:00:00",
@@ -123,6 +123,12 @@ export const TOLU_MOYO_CONFIG = {
         bankName: "Stanbic IBTC Bank",
         accountName: "Adebanjo Moyosore Enoch",
         accountNumber: "0058754631",
+      },
+      usd: {
+        currencyName: "🇳🇬 Naira",
+        bankName: "United Bank of Africa",
+        accountName: "Oluwaranti Toluwani Aderonke",
+        accountNumber: "2093887337",
       },
       /* usd: {
         currencyName: "🇺🇸 Dollar",

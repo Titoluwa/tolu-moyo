@@ -60,6 +60,7 @@ export default function ToluMoyoRegistry() {
           {(
             [
               { key: "ngn", label: "🇳🇬 Naira" },
+              { key: "usd", label: "🇳🇬 Naira" },
               // { key: "usd", label: "🇺🇸 Dollar" },
               // { key: "gbp", label: "🇬🇧 Pounds" },
               // { key: "eur", label: "🇪🇺 Euro" },
@@ -217,7 +218,7 @@ export default function ToluMoyoRegistry() {
                   </div>
                 </div>
 
-                <div className="h-px bg-[#ede9e1]" />
+                {/* <div className="h-px bg-[#ede9e1]" />
 
                 <div className="flex justify-between items-center py-1">
                   <span
@@ -278,7 +279,7 @@ export default function ToluMoyoRegistry() {
                   <span className="text-xs text-[#675e54] text-right max-w-xs">
                     {accounts.usd.bankAddress}
                   </span>
-                </div>
+                </div> */}
               </div>
             </div>
           )}

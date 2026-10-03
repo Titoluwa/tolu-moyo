@@ -16,7 +16,7 @@ const plusJakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Tolu & Moyo — December 19, 2026 | #TM26 #MeetTheAdebanjo2026",
+  title: "Tolu & Moyo — December 19, 2026 | #TM26 #MeetTheAdebanjos™️",
   description:
     "Join Tolu & Moyo as they celebrate their wedding in Ile-Ife, Osun State, Nigeria. RSVP, schedule, registry, and more.",
   keywords: [
@@ -24,11 +24,11 @@ export const metadata: Metadata = {
     "Toluwani and Moyosore",
     "Adebanjo wedding",
     "TM26",
-    "MeetTheAdebanjo2026",
+    "MeetTheAdebanjos™️",
     "Ile-Ife wedding",
   ],
   openGraph: {
-    title: "Tolu & Moyo — December 19, 2026 | #TM26 #MeetTheAdebanjo2026",
+    title: "Tolu & Moyo — December 19, 2026 | #TM26 #MeetTheAdebanjos™️",
     description:
       "Join Tolu & Moyo as they celebrate their wedding in Ile-Ife, Osun State, Nigeria.",
     type: "website",

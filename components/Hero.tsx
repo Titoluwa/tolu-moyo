@@ -99,10 +99,7 @@ export default function ToluMoyoHero() {
 
         <h1 className="font-serif-display text-5xl sm:text-7xl lg:text-8xl font-normal leading-[1.05] tracking-tight mb-3">
           {couple.bride}{" "}
-          <span
-            className="italic font-normal text-[0.85em]"
-            style={{ color: "#DFBA73" }}
-          >
+          <span className="italic font-normal text-[0.85em]" style={{ color: "#DFBA73" }}>
             <br />
             &amp;
             <br />
@@ -110,7 +107,7 @@ export default function ToluMoyoHero() {
           {couple.groom}
         </h1>
 
-        <p className="font-serif-display italic text-xl sm:text-2xl text-white/85 mb-6">
+        <p className="font-serif-display italic text-xl sm:text-2xl text-white/85 mb-8 mt-5">
           {couple.tagline}
         </p>
 

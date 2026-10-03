@@ -4,10 +4,11 @@ export default function ToluMoyoFooter() {
   const { couple } = TOLU_MOYO_CONFIG;
 
   return (
-    <footer className="py-9 px-6 bg-[#1A080C] text-white/50 text-center text-xs tracking-wider border-t border-white/5">
+    <footer className="py-9 px-6 text-center text-xs tracking-wider border-t border-white/5 bg-[#FAF9F6]/95 shadow-sm backdrop-blur-md text-[#2f2a24] ">
+      {/* bg-[#1A080C]/80 text-white/50  */}
       <p>
         Made with <span className="text-[#DFBA73]">💛</span> for{" "}
-        <span className="font-semibold text-white/90">
+        <span className="font-semibold text-[#722f37]">
           {couple.bride} &amp; {couple.groom}
         </span>{" "}
         — <span className="italic">{couple.hashtag}</span> ·{" "}
