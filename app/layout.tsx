@@ -33,6 +33,16 @@ export const metadata: Metadata = {
       "Join Tolu & Moyo as they celebrate their wedding in Ile-Ife, Osun State, Nigeria.",
     type: "website",
   },
+  icons: {
+    icon: [
+      {
+        url: "/logo/TM-logo-wine.png",
+        type: "image/svg+xml",
+      },
+    ],
+    shortcut: "/logo/TM-logo-wine.png",
+    apple: "/logo/TM-logo-wine.png",
+  },
 };
 
 export default function RootLayout({

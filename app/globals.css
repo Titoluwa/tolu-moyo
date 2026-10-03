@@ -1,16 +1,26 @@
 @import "tailwindcss";
 
 :root {
-  --lilac: #cea2fd;
-  --lilac-tint: #f6edff;
-  --lilac-deep: #9d6cd6;
-  --sage: #87ae73;
-  --sage-tint: #eef3ea;
-  --sage-deep: #5e8049;
-  --blue: #4166f5;
-  --blue-deep: #2c48c9;
+  --champagne: #f7e7ce;
+  --champagne-gold: #d4af37;
+  --champagne-light: #fdfbf7;
+  --champagne-tint: #faf5eb;
+  --wine: #722f37;
+  --wine-deep: #4a1521;
+  --wine-dark: #2d0c14;
+  --wine-tint: #faf0f2;
   --cream: #fafaf9;
-  --ink: #1e1e24;
+  --ink: #2f2a24;
+
+  /* Theme aliases */
+  --lilac: var(--champagne-gold);
+  --lilac-tint: var(--champagne-tint);
+  --lilac-deep: var(--wine);
+  --sage: var(--wine);
+  --sage-tint: var(--wine-tint);
+  --sage-deep: var(--wine-deep);
+  --blue: var(--wine);
+  --blue-deep: var(--wine-deep);
 }
 
 html {

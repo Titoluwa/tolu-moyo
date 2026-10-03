@@ -1,103 +1,86 @@
-"use client";
+import { TOLU_MOYO_CONFIG } from "@/lib/tolu-moyo-data";
 
-import { SCHEDULE_ITEMS, ScheduleItem } from "@/lib/wedding-data";
-
-interface TimelineItemProps {
-  readonly item: ScheduleItem;
-}
-
-export function TimelineItem({ item }: TimelineItemProps) {
-  const handleAddToCalendar = () => {
-    const url =
-      "https://calendar.google.com/calendar/render?action=TEMPLATE" +
-      "&text=" +
-      encodeURIComponent(item.calTitle) +
-      "&dates=" +
-      item.calStartUTC +
-      "/" +
-      item.calEndUTC +
-      "&location=" +
-      encodeURIComponent(item.location) +
-      "&details=" +
-      encodeURIComponent(`Join us! ${item.calTitle}`);
-
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
+export default function ToluMoyoSchedule() {
+  const { schedule } = TOLU_MOYO_CONFIG;
 
   return (
-    <div className="relative md:grid md:grid-cols-2 md:gap-10 items-start pl-8 md:pl-0">
-      {/* Timeline Indicator Dot */}
-      <div
-        className="absolute -left-1.25 md:left-1/2 md:-translate-x-1/2 top-1.5 w-3 h-3 rounded-full ring-4 ring-(--lilac-tint)"
-        style={{ background: item.themeColor }}
-      />
-
-      {/* Date & Title */}
-      <div className="md:text-right md:pr-10">
+    <section id="schedule" className="py-24 px-6 bg-white text-[#2f2a24]">
+      <div className="max-w-2xl mx-auto text-center">
         <p
-          className="text-xs font-semibold tracking-wide"
-          style={{ color: item.accentColor }}
+          className="text-xs font-semibold tracking-[0.35em] uppercase mb-3"
+          style={{ color: "#722F37" }}
         >
-          {item.dateTime}
+          The Big Day
         </p>
-        <h3 className="serif text-3xl mt-1 text-(--ink)">{item.title}</h3>
-      </div>
 
-      {/* Details & Action */}
-      <div className="mt-3 md:mt-0 md:pl-10">
-        <p className="text-sm opacity-80">{item.location}</p>
-        <p className="text-sm opacity-80 mt-1">{item.attireNote}</p>
+        <h2 className="font-serif-display text-4xl sm:text-5xl font-normal mb-4">
+          Wedding <em className="italic" style={{ color: "#722F37" }}>Schedule</em>
+        </h2>
 
-        {item.swatches && item.swatches.length > 0 && (
-          <div className="flex gap-2 mt-3">
-            {item.swatches.map((color) => (
-              <span
-                key={`${item.id}-${color}`}
-                className="swatch w-8! h-8! border border-black/10"
-                style={{ background: color }}
-              />
+        {/* Dove Divider */}
+        <div className="flex items-center justify-center gap-4 my-6">
+          <div
+            className="w-16 h-px"
+            style={{
+              background:
+                "linear-gradient(to right, transparent, #D4AF37)",
+            }}
+          />
+          <span className="text-xl">🕊</span>
+          <div
+            className="w-16 h-px"
+            style={{
+              background:
+                "linear-gradient(to left, transparent, #D4AF37)",
+            }}
+          />
+        </div>
+
+        {/* Timeline */}
+        <div className="relative max-w-md mx-auto text-left mt-12 pl-4 sm:pl-0">
+          {/* Vertical Rail */}
+          <div
+            className="absolute left-24 top-2 bottom-4 w-px hidden sm:block"
+            style={{
+              background:
+                "linear-gradient(to bottom, #722F37, #D4AF37, transparent)",
+            }}
+          />
+
+          <div className="flex flex-col gap-9">
+            {schedule.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-start gap-5 sm:gap-7"
+              >
+                {/* Time */}
+                <div
+                  className="font-serif-display text-sm sm:text-base font-semibold min-w-[75px] sm:min-w-[90px] text-right pt-0.5"
+                  style={{ color: "#722F37" }}
+                >
+                  {item.time}
+                </div>
+
+                {/* Dot */}
+                <div className="relative flex items-center justify-center pt-1.5 flex-shrink-0">
+                  <span
+                    className="w-3.5 h-3.5 rounded-full border-2 border-white shadow-sm"
+                    style={{
+                      background: "#722F37",
+                      boxShadow: "0 0 0 2px #F7E7CE",
+                    }}
+                  />
+                </div>
+
+                {/* Event Name */}
+                <div className="flex-1 pt-0.5">
+                  <h4 className="font-serif-display text-lg sm:text-xl font-normal text-[#2f2a24]">
+                    {item.title}
+                  </h4>
+                </div>
+              </div>
             ))}
           </div>
-        )}
-
-        <button
-          type="button"
-          onClick={handleAddToCalendar}
-          className="mt-4 text-xs font-semibold px-4 py-2 rounded-sm border transition-colors hover:bg-black/5 cursor-pointer"
-          style={{
-            borderColor: item.accentColor,
-            color: item.accentColor,
-          }}
-        >
-          Add to Google Calendar
-        </button>
-      </div>
-    </div>
-  );
-}
-
-export default function Schedule() {
-  return (
-    <section
-      id="schedule"
-      className="py-24 md:py-32"
-      style={{ background: "var(--lilac-tint)" }}
-    >
-      <div className="max-w-4xl mx-auto px-6 sm:px-10">
-        <h2
-          className="serif text-4xl sm:text-5xl"
-          style={{ color: "var(--ink)" }}
-        >
-          The Schedule
-        </h2>
-        <p className="mt-3 max-w-lg opacity-75">
-          Two days, four moments — join us for as many as you can.
-        </p>
-
-        <div className="timeline-rail mt-16 space-y-16">
-          {SCHEDULE_ITEMS.map((item) => (
-            <TimelineItem key={item.id} item={item} />
-          ))}
         </div>
       </div>
     </section>

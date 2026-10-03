@@ -14,7 +14,9 @@ export const TOLU_MOYO_CONFIG = {
   couple: {
     bride: "Toluwani",
     groom: "Moyosore",
-    shortName: "T & M",
+    shortName: "T&M",
+    logo: "/logo/TM-logo-wine.png",
+    logo2: "/logo/TM-logo-white.png",
     eyebrow: "You are invited to celebrate",
     tagline: "We're Getting Married 💍",
     hashtag: "#TM26 #MeetTheAdebanjo2026",
@@ -30,7 +32,7 @@ export const TOLU_MOYO_CONFIG = {
     date: "19th December 2026",
     time: "10:00 AM",
     venue: "Rhema Chapel International Churches, Ile-Ife",
-    dressCode: "Color of the day (English/Trad - whatever floats your boat)",
+    dressCode: "Champagne Gold & Wine (English/Trad - whatever floats your boat)",
   },
   story: {
     poem: [
@@ -65,7 +67,7 @@ export const TOLU_MOYO_CONFIG = {
       "slowly became something deeper.",
       "Now we're stepping into a new chapter together,",
       "walking hand in hand toward a journey",
-      "that leads us to forever. 💚",
+      "that leads us to forever. 🥂",
     ],
     highlight:
       "He first saw me on a church screen, from behind a camera lens. He whispered a small prayer: let her come my way. And somehow, our paths crossed. From that moment, two curious hearts found each other—both lovers of journeys, both drawn to new horizons. Now we travel the world side by side, beginning our greatest adventure yet — forever. ✨",
@@ -114,7 +116,7 @@ export const TOLU_MOYO_CONFIG = {
   registry: {
     intro:
       "Your presence is the greatest gift of all. Is it? Please bless us, here are our account details across currencies.",
-    wishlistUrl: "https://giftdice.com/wishlist/k5i7Och8BT",
+    wishlistUrl: "https://www.thingstogetus.com/2400054ac1f08",
     accounts: {
       ngn: {
         currencyName: "🇳🇬 Naira",

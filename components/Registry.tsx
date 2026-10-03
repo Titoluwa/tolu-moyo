@@ -23,13 +23,13 @@ export default function ToluMoyoRegistry() {
       <div className="max-w-3xl mx-auto text-center">
         <p
           className="text-xs font-semibold tracking-[0.35em] uppercase mb-3"
-          style={{ color: "#cea2fd" }}
+          style={{ color: "#722F37" }}
         >
           Gift Registry
         </p>
 
         <h2 className="font-serif-display text-4xl sm:text-5xl font-normal mb-4">
-          Send a <em className="italic" style={{ color: "#587b46" }}>Gift</em>
+          Send a <em className="italic" style={{ color: "#722F37" }}>Gift</em>
         </h2>
 
         {/* Gift Divider */}
@@ -38,7 +38,7 @@ export default function ToluMoyoRegistry() {
             className="w-16 h-px"
             style={{
               background:
-                "linear-gradient(to right, transparent, #b9d1aa)",
+                "linear-gradient(to right, transparent, #D4AF37)",
             }}
           />
           <span className="text-xl">🎁</span>
@@ -46,7 +46,7 @@ export default function ToluMoyoRegistry() {
             className="w-16 h-px"
             style={{
               background:
-                "linear-gradient(to left, transparent, #b9d1aa)",
+                "linear-gradient(to left, transparent, #D4AF37)",
             }}
           />
         </div>
@@ -74,14 +74,14 @@ export default function ToluMoyoRegistry() {
                 className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wider transition-all duration-200 cursor-pointer ${
                   isActive
                     ? "shadow-sm"
-                    : "bg-[#FAF9F6] text-[#675e54] border border-[#ede9e1] hover:border-[#87AE73]"
+                    : "bg-[#FAF9F6] text-[#675e54] border border-[#ede9e1] hover:border-[#722F37]"
                 }`}
                 style={
                   isActive
                     ? {
-                        background: "#87AE73",
+                        background: "#722F37",
                         color: "#ffffff",
-                        borderColor: "#87AE73",
+                        borderColor: "#722F37",
                       }
                     : undefined
                 }
@@ -99,7 +99,7 @@ export default function ToluMoyoRegistry() {
               <div
                 className="absolute top-0 left-0 right-0 h-1.5"
                 style={{
-                  background: "linear-gradient(to right, #87AE73, #cea2fd)",
+                  background: "linear-gradient(to right, #722F37, #D4AF37)",
                 }}
               />
               <h3 className="font-serif-display text-xl text-[#2f2a24] mb-6 flex items-center gap-2">
@@ -110,7 +110,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Account Name
                   </span>
@@ -124,7 +124,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Account Number
                   </span>
@@ -142,11 +142,11 @@ export default function ToluMoyoRegistry() {
                       className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
                       style={{
                         background:
-                          copiedKey === "ngn-acc" ? "#87AE73" : "#ffffff",
+                          copiedKey === "ngn-acc" ? "#722F37" : "#ffffff",
                         color:
-                          copiedKey === "ngn-acc" ? "#ffffff" : "#587b46",
+                          copiedKey === "ngn-acc" ? "#ffffff" : "#722F37",
                         borderColor:
-                          copiedKey === "ngn-acc" ? "#87AE73" : "#ede9e1",
+                          copiedKey === "ngn-acc" ? "#722F37" : "#ede9e1",
                       }}
                     >
                       {copiedKey === "ngn-acc" ? "Copied!" : "Copy"}
@@ -162,7 +162,7 @@ export default function ToluMoyoRegistry() {
               <div
                 className="absolute top-0 left-0 right-0 h-1.5"
                 style={{
-                  background: "linear-gradient(to right, #87AE73, #cea2fd)",
+                  background: "linear-gradient(to right, #722F37, #D4AF37)",
                 }}
               />
               <h3 className="font-serif-display text-xl text-[#2f2a24] mb-6 flex items-center gap-2">
@@ -173,7 +173,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Account Name
                   </span>
@@ -187,7 +187,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Account Number
                   </span>
@@ -205,11 +205,11 @@ export default function ToluMoyoRegistry() {
                       className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
                       style={{
                         background:
-                          copiedKey === "usd-acc" ? "#87AE73" : "#ffffff",
+                          copiedKey === "usd-acc" ? "#722F37" : "#ffffff",
                         color:
-                          copiedKey === "usd-acc" ? "#ffffff" : "#587b46",
+                          copiedKey === "usd-acc" ? "#ffffff" : "#722F37",
                         borderColor:
-                          copiedKey === "usd-acc" ? "#87AE73" : "#ede9e1",
+                          copiedKey === "usd-acc" ? "#722F37" : "#ede9e1",
                       }}
                     >
                       {copiedKey === "usd-acc" ? "Copied!" : "Copy"}
@@ -222,7 +222,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Account Type
                   </span>
@@ -236,7 +236,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Routing Number
                   </span>
@@ -254,11 +254,11 @@ export default function ToluMoyoRegistry() {
                       className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
                       style={{
                         background:
-                          copiedKey === "usd-route" ? "#87AE73" : "#ffffff",
+                          copiedKey === "usd-route" ? "#722F37" : "#ffffff",
                         color:
-                          copiedKey === "usd-route" ? "#ffffff" : "#587b46",
+                          copiedKey === "usd-route" ? "#ffffff" : "#722F37",
                         borderColor:
-                          copiedKey === "usd-route" ? "#87AE73" : "#ede9e1",
+                          copiedKey === "usd-route" ? "#722F37" : "#ede9e1",
                       }}
                     >
                       {copiedKey === "usd-route" ? "Copied!" : "Copy"}
@@ -271,7 +271,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-start py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Bank Address
                   </span>
@@ -288,7 +288,7 @@ export default function ToluMoyoRegistry() {
               <div
                 className="absolute top-0 left-0 right-0 h-1.5"
                 style={{
-                  background: "linear-gradient(to right, #87AE73, #cea2fd)",
+                  background: "linear-gradient(to right, #722F37, #D4AF37)",
                 }}
               />
               <h3 className="font-serif-display text-xl text-[#2f2a24] mb-6 flex items-center gap-2">
@@ -299,7 +299,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Account Name
                   </span>
@@ -313,7 +313,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Account Number
                   </span>
@@ -331,11 +331,11 @@ export default function ToluMoyoRegistry() {
                       className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
                       style={{
                         background:
-                          copiedKey === "gbp-acc" ? "#87AE73" : "#ffffff",
+                          copiedKey === "gbp-acc" ? "#722F37" : "#ffffff",
                         color:
-                          copiedKey === "gbp-acc" ? "#ffffff" : "#587b46",
+                          copiedKey === "gbp-acc" ? "#ffffff" : "#722F37",
                         borderColor:
-                          copiedKey === "gbp-acc" ? "#87AE73" : "#ede9e1",
+                          copiedKey === "gbp-acc" ? "#722F37" : "#ede9e1",
                       }}
                     >
                       {copiedKey === "gbp-acc" ? "Copied!" : "Copy"}
@@ -348,7 +348,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Sort Code
                   </span>
@@ -366,11 +366,11 @@ export default function ToluMoyoRegistry() {
                       className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
                       style={{
                         background:
-                          copiedKey === "gbp-sort" ? "#87AE73" : "#ffffff",
+                          copiedKey === "gbp-sort" ? "#722F37" : "#ffffff",
                         color:
-                          copiedKey === "gbp-sort" ? "#ffffff" : "#587b46",
+                          copiedKey === "gbp-sort" ? "#ffffff" : "#722F37",
                         borderColor:
-                          copiedKey === "gbp-sort" ? "#87AE73" : "#ede9e1",
+                          copiedKey === "gbp-sort" ? "#722F37" : "#ede9e1",
                       }}
                     >
                       {copiedKey === "gbp-sort" ? "Copied!" : "Copy"}
@@ -383,7 +383,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     IBAN
                   </span>
@@ -398,11 +398,11 @@ export default function ToluMoyoRegistry() {
                       className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
                       style={{
                         background:
-                          copiedKey === "gbp-iban" ? "#87AE73" : "#ffffff",
+                          copiedKey === "gbp-iban" ? "#722F37" : "#ffffff",
                         color:
-                          copiedKey === "gbp-iban" ? "#ffffff" : "#587b46",
+                          copiedKey === "gbp-iban" ? "#ffffff" : "#722F37",
                         borderColor:
-                          copiedKey === "gbp-iban" ? "#87AE73" : "#ede9e1",
+                          copiedKey === "gbp-iban" ? "#722F37" : "#ede9e1",
                       }}
                     >
                       {copiedKey === "gbp-iban" ? "Copied!" : "Copy"}
@@ -415,7 +415,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-start py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Bank Address
                   </span>
@@ -432,7 +432,7 @@ export default function ToluMoyoRegistry() {
               <div
                 className="absolute top-0 left-0 right-0 h-1.5"
                 style={{
-                  background: "linear-gradient(to right, #87AE73, #cea2fd)",
+                  background: "linear-gradient(to right, #722F37, #D4AF37)",
                 }}
               />
               <h3 className="font-serif-display text-xl text-[#2f2a24] mb-6 flex items-center gap-2">
@@ -443,7 +443,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Account Name
                   </span>
@@ -457,7 +457,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     IBAN
                   </span>
@@ -472,11 +472,11 @@ export default function ToluMoyoRegistry() {
                       className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
                       style={{
                         background:
-                          copiedKey === "eur-iban" ? "#87AE73" : "#ffffff",
+                          copiedKey === "eur-iban" ? "#722F37" : "#ffffff",
                         color:
-                          copiedKey === "eur-iban" ? "#ffffff" : "#587b46",
+                          copiedKey === "eur-iban" ? "#ffffff" : "#722F37",
                         borderColor:
-                          copiedKey === "eur-iban" ? "#87AE73" : "#ede9e1",
+                          copiedKey === "eur-iban" ? "#722F37" : "#ede9e1",
                       }}
                     >
                       {copiedKey === "eur-iban" ? "Copied!" : "Copy"}
@@ -489,7 +489,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-center py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     BIC / SWIFT
                   </span>
@@ -504,11 +504,11 @@ export default function ToluMoyoRegistry() {
                       className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
                       style={{
                         background:
-                          copiedKey === "eur-bic" ? "#87AE73" : "#ffffff",
+                          copiedKey === "eur-bic" ? "#722F37" : "#ffffff",
                         color:
-                          copiedKey === "eur-bic" ? "#ffffff" : "#587b46",
+                          copiedKey === "eur-bic" ? "#ffffff" : "#722F37",
                         borderColor:
-                          copiedKey === "eur-bic" ? "#87AE73" : "#ede9e1",
+                          copiedKey === "eur-bic" ? "#722F37" : "#ede9e1",
                       }}
                     >
                       {copiedKey === "eur-bic" ? "Copied!" : "Copy"}
@@ -521,7 +521,7 @@ export default function ToluMoyoRegistry() {
                 <div className="flex justify-between items-start py-1">
                   <span
                     className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#cea2fd" }}
+                    style={{ color: "#722F37" }}
                   >
                     Bank Address
                   </span>
@@ -557,9 +557,10 @@ export default function ToluMoyoRegistry() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-200 hover:-translate-y-0.5"
             style={{
-              background: "#cea2fd",
-              color: "#251137",
-              boxShadow: "0 6px 20px rgba(206, 162, 253, 0.4)",
+              background: "#722F37",
+              color: "#F7E7CE",
+              border: "1px solid rgba(212, 175, 55, 0.45)",
+              boxShadow: "0 6px 20px rgba(114, 47, 55, 0.3)",
             }}
           >
             <span>🎁</span> View Our Registry

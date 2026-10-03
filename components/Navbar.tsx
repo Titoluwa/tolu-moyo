@@ -1,102 +1,156 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
-import { WEDDING_CONFIG } from "@/lib/wedding-data";
+import { useEffect, useState } from "react";
+import { TOLU_MOYO_CONFIG } from "@/lib/tolu-moyo-data";
 
-export default function Navbar() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+export default function ToluMoyoNavbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
-  const navLinks = [
-    { href: "#story", label: "Our Story" },
-    { href: "#schedule", label: "Schedule" },
-    { href: "#aso-ebi", label: "Aso-Ebi" },
-    { href: "#gallery", label: "Gallery" },
-    { href: "#gifts", label: "Gifts" },
-  ];
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 inset-x-0 z-40 bg-[#fafaf9]/90 backdrop-blur border-b border-black/5">
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
-        <Link
-          href="#top"
-          className="serif text-lg tracking-tight font-medium"
-          style={{ color: "var(--ink)" }}
-        >
-          {WEDDING_CONFIG.couple.shortName}
-        </Link>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 sm:px-12 py-4.5 flex items-center justify-between ${
+        scrolled
+          ? "bg-[#FAF9F6]/95 shadow-sm backdrop-blur-md text-[#2f2a24]"
+          : "bg-transparent text-white"
+      }`}
+    >
+      <a
+        href="#hero"
+        className="font-serif-display text-xl sm:text-2xl tracking-wider font-semibold"
+      >
+        {scrolled
+          ? <img src={TOLU_MOYO_CONFIG.couple.logo} className="w-15 h-15" />
+          : <img src={TOLU_MOYO_CONFIG.couple.logo2} className="w-15 h-15" />
+        }
+      </a>
 
-        {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8 text-sm">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="hover:text-(--blue) transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-3">
+      {/* Desktop Navigation */}
+      <ul className="hidden md:flex items-center gap-7 text-xs font-semibold tracking-widest uppercase">
+        {/* <li>
+          <a
+            href="#story"
+            className="transition-colors hover:text-[#D4AF37]"
+          >
+            Our Story
+          </a>
+        </li> */}
+        <li>
+          <a
+            href="#details"
+            className="transition-colors hover:text-[#D4AF37]"
+          >
+            Details
+          </a>
+        </li>
+        {/* <li>
+          <a
+            href="#schedule"
+            className="transition-colors hover:text-[#D4AF37]"
+          >
+            Schedule
+          </a>
+        </li> */}
+        <li>
+          <a
+            href="#gallery"
+            className="transition-colors hover:text-[#D4AF37]"
+          >
+            Gallery
+          </a>
+        </li>
+        <li>
+          <a
+            href="#registry"
+            className="transition-colors hover:text-[#D4AF37]"
+          >
+            Registry
+          </a>
+        </li>
+        <li>
           <a
             href="#rsvp"
-            className="text-sm font-semibold px-4 py-2 rounded-sm text-white transition-opacity hover:opacity-95"
-            style={{ background: "var(--blue)" }}
+            className="px-4 py-2 rounded-full font-bold transition-all shadow-sm hover:opacity-95"
+            style={{
+              background: "#722F37",
+              color: "#F7E7CE",
+              border: "1px solid rgba(212, 175, 55, 0.45)",
+            }}
           >
             RSVP
           </a>
+        </li>
+      </ul>
 
-          {/* Mobile hamburger button */}
-          <button
-            type="button"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-black/70 hover:text-black focus:outline-none"
-            aria-label="Toggle navigation menu"
-            aria-expanded={mobileMenuOpen}
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              {mobileMenuOpen ? (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              ) : (
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              )}
-            </svg>
-          </button>
-        </div>
-      </div>
+      {/* Mobile Menu Button */}
+      <button
+        onClick={() => setMenuOpen(!menuOpen)}
+        className="md:hidden p-2 text-sm focus:outline-none"
+        aria-label="Toggle navigation menu"
+      >
+        <span className="text-xl">{menuOpen ? "✕" : "☰"}</span>
+      </button>
 
       {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="md:hidden bg-[#fafaf9] border-b border-black/10 px-6 py-4 space-y-3 shadow-lg">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setMobileMenuOpen(false)}
-              className="block py-2 text-sm font-medium hover:text-(--blue) transition-colors"
-            >
-              {link.label}
-            </a>
-          ))}
+      {menuOpen && (
+        <div className="md:hidden absolute top-full left-0 right-0 bg-[#FAF9F6] text-[#2f2a24] shadow-lg border-t border-[#ede9e1] py-5 px-6 flex flex-col gap-4 text-xs font-semibold tracking-widest uppercase">
+          {/* <a
+            href="#story"
+            onClick={() => setMenuOpen(false)}
+            className="py-1 hover:text-[#722F37]"
+          >
+            Our Story
+          </a> */}
+          <a
+            href="#details"
+            onClick={() => setMenuOpen(false)}
+            className="py-1 hover:text-[#722F37]"
+          >
+            Details
+          </a>
+          {/* <a
+            href="#schedule"
+            onClick={() => setMenuOpen(false)}
+            className="py-1 hover:text-[#722F37]"
+          >
+            Schedule
+          </a> */}
+          <a
+            href="#gallery"
+            onClick={() => setMenuOpen(false)}
+            className="py-1 hover:text-[#722F37]"
+          >
+            Gallery
+          </a>
+          <a
+            href="#registry"
+            onClick={() => setMenuOpen(false)}
+            className="py-1 hover:text-[#722F37]"
+          >
+            Registry
+          </a>
+          <a
+            href="#rsvp"
+            onClick={() => setMenuOpen(false)}
+            className="py-2.5 text-center rounded-full font-bold mt-2"
+            style={{
+              background: "#722F37",
+              color: "#F7E7CE",
+              border: "1px solid rgba(212, 175, 55, 0.45)",
+            }}
+          >
+            RSVP Now
+          </a>
         </div>
       )}
-    </header>
+    </nav>
   );
 }

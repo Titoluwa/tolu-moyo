@@ -1,52 +1,66 @@
-import Image from "next/image";
-import { STORY_ITEMS, StoryItem } from "@/lib/wedding-data";
+import { TOLU_MOYO_CONFIG } from "@/lib/tolu-moyo-data";
 
-interface StoryCardProps {
-  readonly item: StoryItem;
-}
+export default function ToluMoyoStory() {
+  const { story } = TOLU_MOYO_CONFIG;
 
-export function StoryCard({ item }: StoryCardProps) {
   return (
-    <div className={item.offset ? "md:mt-14" : ""}>
-      <div className="relative aspect-4/5 overflow-hidden rounded-sm bg-black/5">
-        <Image
-          src={item.imageUrl}
-          alt={item.imageAlt}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover transition-transform duration-500 hover:scale-105"
-        />
-      </div>
-      <h3
-        className="serif text-2xl mt-5 font-medium"
-        style={{ color: item.titleColor }}
-      >
-        {item.title}
-      </h3>
-      <p className="mt-2 text-sm leading-relaxed opacity-80">
-        {item.description}
-      </p>
-    </div>
-  );
-}
+    <section id="story" className="py-24 px-6 bg-white text-[#2f2a24]">
+      <div className="max-w-3xl mx-auto text-center">
+        <p
+          className="text-xs font-semibold tracking-[0.35em] uppercase mb-3"
+          style={{ color: "#722F37" }}
+        >
+          The Beginning
+        </p>
 
-export default function Story() {
-  return (
-    <section
-      id="story"
-      className="max-w-6xl mx-auto px-6 sm:px-10 py-24 md:py-32"
-    >
-      <h2 className="serif text-4xl sm:text-5xl" style={{ color: "var(--ink)" }}>
-        Our Story
-      </h2>
-      <p className="mt-3 max-w-lg opacity-75">
-        Three moments that brought us here.
-      </p>
+        <h2 className="font-serif-display text-4xl sm:text-5xl font-normal mb-4 text-[#2f2a24]">
+          How We <em className="italic" style={{ color: "#722F37" }}>Met</em>
+        </h2>
 
-      <div className="mt-16 grid md:grid-cols-3 gap-12 md:gap-8">
-        {STORY_ITEMS.map((item) => (
-          <StoryCard key={item.id} item={item} />
-        ))}
+        {/* Botanical Leaf Divider */}
+        <div className="flex items-center justify-center gap-4 my-6">
+          <div
+            className="w-16 h-px"
+            style={{
+              background:
+                "linear-gradient(to right, transparent, #D4AF37)",
+            }}
+          />
+          <span className="text-xl" style={{ color: "#722F37" }}>
+            ✨
+          </span>
+          <div
+            className="w-16 h-px"
+            style={{
+              background:
+                "linear-gradient(to left, transparent, #D4AF37)",
+            }}
+          />
+        </div>
+
+        {/* Poem */}
+        <div className="font-serif-display italic text-lg sm:text-xl leading-relaxed sm:leading-loose text-[#675e54] max-w-xl mx-auto mb-12">
+          {story.poem.map((line, idx) =>
+            line === "" ? (
+              <div key={idx} className="h-4" />
+            ) : (
+              <p key={idx}>{line}</p>
+            )
+          )}
+        </div>
+
+        {/* Short Highlight Card */}
+        <div
+          className="p-7 sm:p-9 rounded-r-2xl max-w-xl mx-auto text-left shadow-sm border-l-4"
+          style={{
+            background: "#FAF9F6",
+            borderLeftColor: "#722F37",
+          }}
+        >
+          <p className="font-serif-display italic text-base sm:text-lg leading-relaxed text-[#675e54]">
+            {story.highlight}
+          </p>
+        </div>
       </div>
     </section>
   );

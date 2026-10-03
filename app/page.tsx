@@ -1,4 +1,4 @@
-import ToluMoyoPage from "@/components/tolu-moyo/ToluMoyoPage";
+import ToluMoyoPage from "@/components/ToluMoyoPage";
 
 export default function Home() {
   return <ToluMoyoPage />;
