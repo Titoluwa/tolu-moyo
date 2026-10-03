@@ -148,19 +148,18 @@ export async function POST(request: Request) {
               }
               <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>🏷️ Category:</strong> ${resolvedCategory}</p>
             </div>
-            <div style="background: #FAF5EB; border-left: 4px solid #D4AF37; padding: 14px 18px; margin: 20px 0; border-radius: 4px;">
-              <p style="margin: 0; color: #3B121A; font-size: 13px; line-height: 1.5;">
-                <strong>A Gentle Reminder 🤍</strong><br />
-                As much as we love your little ones, our celebrations will be an adults-only event. We appreciate your understanding!
-              </p>
-            </div>
           `
             : "";
 
         const htmlContent =  ThankYouMail({name, greetingMessage, detailsSection});
         
         const textContent = textcontent({name, greetingMessage, isAttending, isMaybe, hasPlusOne, finalPlusOneName, resolvedCategory, finalPlusOne});
-
+          // <div style="background: #FAF5EB; border-left: 4px solid #D4AF37; padding: 14px 18px; margin: 20px 0; border-radius: 4px;">
+          //               <p style="margin: 0; color: #3B121A; font-size: 13px; line-height: 1.5;">
+          //                 <strong>A Gentle Reminder 🤍</strong><br />
+          //                 As much as we love your little ones, our celebrations will be an adults-only event. We appreciate your understanding!
+          //               </p>
+          //             </div>
         await transporter.sendMail({
           from: smtpFrom,
           to: email,

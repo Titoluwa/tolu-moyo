@@ -119,12 +119,12 @@ export default function ToluMoyoRsvpSection() {
             <h3 className="font-serif-display italic text-2xl sm:text-3xl text-white mb-2">
               {formData.attend === "no"
                 ? "Thank you for letting us know!"
-                : "You&apos;re on the list!"}
+                : "You're on the list!"}
             </h3>
             <p className="text-sm text-white/75 mb-3">
               {formData.attend === "no"
                 ? "We'll miss you in Ile-Ife, but we deeply appreciate your love and prayers."
-                : "We can&apos;t wait to celebrate with you in Ile-Ife!"}
+                : "We can't wait to celebrate with you in Ile-Ife!"}
             </p>
             {formData.email && (
               <p className="text-xs text-[#DFBA73]/90">
