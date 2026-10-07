@@ -87,14 +87,12 @@ export default function ToluMoyoDetails() {
               boxShadow: "0 0 0 5px rgba(114, 47, 55, 0.12)",
             }}
           />
-          <div>
-            <p className="text-[10px] font-semibold uppercase tracking-[0.25em] px-2 py-1 w-32 text-center rounded-full bg-[#F7E7CE] text-[#722F37]">
+          <div className="flex flex-col items-center sm:items-start text-center sm:text-left flex-1 min-w-0">
+            <p className="inline-flex items-center justify-center text-[10px] sm:text-xs font-semibold uppercase tracking-[0.2em] sm:tracking-[0.25em] px-3 py-1 rounded-full bg-[#F7E7CE] text-[#722F37] w-fit">
               Dress Code
             </p>
-            <p className="mt-1 text-sm font-medium sm:text-base text-[#722F37]">
+            <p className="mt-1.5 text-sm font-medium leading-relaxed sm:text-base text-[#722F37] break-words">
               {TOLU_MOYO_CONFIG.details.dressCode}
-             {/*  <br />
-              <span className="text-[#722F37]">English Wear or Traditional Outfit</span> */}
             </p>
           </div>
         </div>
