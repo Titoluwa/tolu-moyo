@@ -19,7 +19,7 @@ export default function ToluMoyoRsvpSection() {
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.attend || !formData.category) {
       setError("Please fill in all required fields.");
@@ -91,7 +91,7 @@ export default function ToluMoyoRsvpSection() {
       {/* Hairline inset frame */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-3 rounded-[1.5rem] border border-gold-soft/10 sm:inset-6"
+        className="pointer-events-none absolute inset-3 rounded-3xl border border-gold-soft/10 sm:inset-6"
       />
 
       <div className="relative z-10 mx-auto max-w-2xl px-2">
@@ -110,7 +110,7 @@ export default function ToluMoyoRsvpSection() {
           </div>
 
           {/* Adults-only Notice: gracefully styled note */}
-          <div className="mx-auto mb-10 max-w-lg rounded-2xl border border-white/10 bg-white/[0.04] p-5 text-center backdrop-blur-sm sm:p-6">
+          <div className="mx-auto mb-10 max-w-lg rounded-2xl border border-white/10 bg-white/4 p-5 text-center backdrop-blur-sm sm:p-6">
             <p className="eyebrow text-[10px] text-gold-soft">
               A Small Request
             </p>
@@ -130,7 +130,7 @@ export default function ToluMoyoRsvpSection() {
         </Reveal>
 
         {submitted ? (
-          <Reveal className="animate-fadeUp relative mx-auto max-w-lg overflow-hidden rounded-2xl border border-gold-soft/30 bg-white/[0.08] p-8 text-center backdrop-blur-md sm:p-12">
+          <Reveal className="animate-fadeUp relative mx-auto max-w-lg overflow-hidden rounded-2xl border border-gold-soft/30 bg-white/8 p-8 text-center backdrop-blur-md sm:p-12">
             <div
               aria-hidden="true"
               className="pointer-events-none absolute inset-2 rounded-xl border border-gold-soft/15"
