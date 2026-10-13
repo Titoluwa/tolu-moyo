@@ -2,8 +2,30 @@
 
 import { useState } from "react";
 import { TOLU_MOYO_CONFIG } from "@/lib/tolu-moyo-data";
+import Reveal from "./Reveal";
 
 type TabKey = "ngn" | "usd" | "gbp" | "eur" | "crypto";
+
+const TABS: { key: TabKey; label: string }[] = [
+  { key: "ngn", label: "🇳🇬 Naira" },
+  // { key: "usd", label: "🇳🇬 Naira" },
+  // { key: "usd", label: "🇺🇸 Dollar" },
+  // { key: "gbp", label: "🇬🇧 Pounds" },
+  // { key: "eur", label: "🇪🇺 Euro" },
+  // { key: "crypto", label: "₿ Crypto" },
+];
+
+/** Account fields, in display order. Only fields present on an account render. */
+const FIELDS: { key: string; label: string; copy?: boolean; muted?: boolean }[] = [
+  { key: "accountName", label: "Account Name" },
+  { key: "accountNumber", label: "Account Number", copy: true },
+  { key: "accountType", label: "Account Type" },
+  { key: "routingNumber", label: "Routing Number", copy: true },
+  { key: "sortCode", label: "Sort Code", copy: true },
+  { key: "iban", label: "IBAN", copy: true },
+  { key: "bic", label: "BIC / SWIFT", copy: true },
+  { key: "bankAddress", label: "Bank Address", muted: true },
+];
 
 export default function ToluMoyoRegistry() {
   const { registry } = TOLU_MOYO_CONFIG;
@@ -12,561 +34,198 @@ export default function ToluMoyoRegistry() {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const handleCopy = (text: string, key: string) => {
-    navigator.clipboard.writeText(text).then(() => {
-      setCopiedKey(key);
-      setTimeout(() => setCopiedKey(null), 2000);
-    });
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        setCopiedKey(key);
+        setTimeout(() => setCopiedKey(null), 2000);
+      })
+      .catch(() => {
+        /* Clipboard unavailable (e.g. insecure context) — the number stays selectable. */
+      });
   };
 
+  const account = activeTab !== "crypto" ? accounts[activeTab] : undefined;
+
   return (
-    <section id="registry" className="py-24 px-6 bg-[#FAF9F6] text-[#2f2a24]">
-      <div className="max-w-3xl mx-auto text-center">
-        <p
-          className="text-xs font-semibold tracking-[0.35em] uppercase mb-3"
-          style={{ color: "#722F37" }}
-        >
-          Gift Registry
-        </p>
+    <section
+      id="registry"
+      className="section overflow-hidden bg-champagne-tint text-ink"
+    >
+      {/* Soft hairline where the section meets the one above */}
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-gold/40 to-transparent" />
 
-        <h2 className="font-serif-display text-4xl sm:text-5xl font-normal mb-4">
-          Send a <em className="italic" style={{ color: "#722F37" }}>Gift</em>
-        </h2>
+      <div className="relative mx-auto max-w-3xl text-center">
+        <Reveal>
+          <p className="eyebrow mb-5 text-wine">Gift Registry</p>
 
-        {/* Gift Divider */}
-        <div className="flex items-center justify-center gap-4 my-6">
+          <h2 className="section-title">
+            Send a <em className="italic text-wine">Gift</em>
+          </h2>
+
+          <div className="ornament my-8" aria-hidden="true">
+            <span />
+          </div>
+
+          <p className="lede mx-auto max-w-xl text-ink-muted">
+            {registry.intro}
+          </p>
+        </Reveal>
+
+        <Reveal delay={100} className="mt-12">
+          {/* Currency Tabs */}
           <div
-            className="w-16 h-px"
-            style={{
-              background:
-                "linear-gradient(to right, transparent, #D4AF37)",
-            }}
-          />
-          <span className="text-xl">🎁</span>
+            role="tablist"
+            aria-label="Account details"
+            className="mx-auto inline-flex max-w-full flex-wrap justify-center gap-1.5 rounded-full bg-white/70 p-1.5 ring-1 ring-line"
+          >
+            {TABS.map((tab) => {
+              const isActive = activeTab === tab.key;
+              const bank = accounts[tab.key]?.bankName;
+              return (
+                <button
+                  key={tab.key}
+                  type="button"
+                  role="tab"
+                  id={`registry-tab-${tab.key}`}
+                  aria-selected={isActive}
+                  aria-controls="registry-panel"
+                  onClick={() => setActiveTab(tab.key)}
+                  className={`flex min-h-11 cursor-pointer items-center gap-2 rounded-full px-5 py-2 text-xs font-semibold tracking-wide transition-all duration-300 ${
+                    isActive
+                      ? "bg-wine text-champagne shadow-[0_6px_18px_-8px_rgba(114,47,55,0.6)]"
+                      : "text-ink-muted hover:text-wine"
+                  }`}
+                >
+                  <span>{tab.label}</span>
+                  {/* Both tabs are Naira, so the bank name tells them apart */}
+                  {bank && (
+                    <span
+                      className={`hidden font-normal sm:inline ${
+                        isActive ? "text-champagne/70" : "text-ink-muted/70"
+                      }`}
+                    >
+                      · {bank}
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Tab Panel */}
           <div
-            className="w-16 h-px"
-            style={{
-              background:
-                "linear-gradient(to left, transparent, #D4AF37)",
-            }}
-          />
-        </div>
+            key={activeTab}
+            id="registry-panel"
+            role="tabpanel"
+            aria-labelledby={`registry-tab-${activeTab}`}
+            className="animate-fadeIn mx-auto mt-8 max-w-xl text-left"
+          >
+            {account && (
+              <div className="relative overflow-hidden rounded-2xl bg-white px-6 py-7 shadow-[0_24px_50px_-30px_rgba(74,21,33,0.35)] ring-1 ring-line sm:px-10 sm:py-9">
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-2 rounded-xl border border-gold/20"
+                />
+                <p className="eyebrow relative text-[10px] text-gold">Bank</p>
+                <h3 className="relative mt-1 font-serif-display text-2xl text-ink sm:text-[1.75rem]">
+                  {account.bankName}
+                </h3>
 
-        <p className="font-serif-display italic text-base sm:text-lg text-[#675e54] max-w-lg mx-auto mb-10 leading-relaxed">
-          {registry.intro}
-        </p>
+                <dl className="relative mt-6 border-t border-line-soft">
+                  {FIELDS.filter((f) => account[f.key]).map((field) => {
+                    const copyKey = `${activeTab}-${field.key}`;
+                    const copied = copiedKey === copyKey;
+                    const isNumber = field.key === "accountNumber";
+                    let typographyClass = "font-serif-display text-lg text-ink";
+                    if (field.muted) {
+                      typographyClass = "text-sm leading-relaxed text-ink-muted";
+                    } else if (isNumber) {
+                      typographyClass = "num-cell font-serif-display text-2xl font-medium tracking-[0.06em] text-ink select-all";
+                    }
 
-        {/* Currency Tabs */}
-        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-10">
-          {(
-            [
-              { key: "ngn", label: "🇳🇬 Naira" },
-              { key: "usd", label: "🇳🇬 Naira" },
-              // { key: "usd", label: "🇺🇸 Dollar" },
-              // { key: "gbp", label: "🇬🇧 Pounds" },
-              // { key: "eur", label: "🇪🇺 Euro" },
-              // { key: "crypto", label: "₿ Crypto" },
-            ] as const
-          ).map((tab) => {
-            const isActive = activeTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`px-5 py-2.5 rounded-full text-xs font-bold tracking-wider transition-all duration-200 cursor-pointer ${
-                  isActive
-                    ? "shadow-sm"
-                    : "bg-[#FAF9F6] text-[#675e54] border border-[#ede9e1] hover:border-[#722F37]"
-                }`}
-                style={
-                  isActive
-                    ? {
-                        background: "#722F37",
-                        color: "#ffffff",
-                        borderColor: "#722F37",
-                      }
-                    : undefined
-                }
-              >
-                {tab.label}
-              </button>
-            );
-          })}
-        </div>
-
-        {/* Tab Panels */}
-        <div className="max-w-xl mx-auto text-left">
-          {activeTab === "ngn" && (
-            <div className="relative bg-[#FAF9F6] rounded-2xl p-7 sm:p-10 border border-[#ede9e1] shadow-sm overflow-hidden">
-              <div
-                className="absolute top-0 left-0 right-0 h-1.5"
-                style={{
-                  background: "linear-gradient(to right, #722F37, #D4AF37)",
-                }}
-              />
-              <h3 className="font-serif-display text-xl text-[#2f2a24] mb-6 flex items-center gap-2">
-                <span>🏦</span> {accounts.ngn.bankName}
-              </h3>
-
-              <div className="flex flex-col gap-4 text-sm">
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Account Name
-                  </span>
-                  <span className="font-serif-display text-base text-[#2f2a24]">
-                    {accounts.ngn.accountName}
-                  </span>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Account Number
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif-display text-base font-semibold text-[#2f2a24]">
-                      {accounts.ngn.accountNumber}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopy(
-                          accounts.ngn.accountNumber,
-                          "ngn-acc"
-                        )
-                      }
-                      className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
-                      style={{
-                        background:
-                          copiedKey === "ngn-acc" ? "#722F37" : "#ffffff",
-                        color:
-                          copiedKey === "ngn-acc" ? "#ffffff" : "#722F37",
-                        borderColor:
-                          copiedKey === "ngn-acc" ? "#722F37" : "#ede9e1",
-                      }}
-                    >
-                      {copiedKey === "ngn-acc" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
+                    return (
+                      <div
+                        key={field.key}
+                        className="flex flex-col gap-1.5 border-b border-line-soft py-4 sm:flex-row sm:items-center sm:justify-between sm:gap-6"
+                      >
+                        <dt className="eyebrow shrink-0 text-[10px] text-wine/80">
+                          {field.label}
+                        </dt>
+                        <dd className="flex min-w-0 items-center justify-between gap-4 sm:justify-end">
+                          <span
+                            className={`min-w-0 wrap-break-word sm:text-right ${typographyClass}`}
+                          >
+                            {account[field.key]}
+                          </span>
+                          {field.copy && (
+                            <button
+                              type="button"
+                              onClick={() => handleCopy(account[field.key], copyKey)}
+                              aria-label={`Copy ${field.label}`}
+                              className={`inline-flex min-h-9 shrink-0 cursor-pointer items-center gap-1.5 rounded-full border px-3.5 text-[10px] font-semibold tracking-[0.18em] uppercase transition-all duration-300 ${
+                                copied
+                                  ? "border-wine bg-wine text-champagne"
+                                  : "border-line text-wine hover:border-wine/50 hover:bg-wine/5"
+                              }`}
+                            >
+                              {copied ? (
+                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" className="h-3 w-3" aria-hidden="true">
+                                  <path d="M3 8.5l3 3 7-7" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                              ) : (
+                                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.3" className="h-3 w-3" aria-hidden="true">
+                                  <rect x="5" y="5" width="8.5" height="8.5" rx="1.5" />
+                                  <path d="M10.5 5V3.5A1.5 1.5 0 0 0 9 2H3.5A1.5 1.5 0 0 0 2 3.5V9a1.5 1.5 0 0 0 1.5 1.5H5" />
+                                </svg>
+                              )}
+                              {copied ? "Copied!" : "Copy"}
+                            </button>
+                          )}
+                        </dd>
+                      </div>
+                    );
+                  })}
+                </dl>
               </div>
-            </div>
-          )}
+            )}
 
-          {activeTab === "usd" && (
-            <div className="relative bg-[#FAF9F6] rounded-2xl p-7 sm:p-10 border border-[#ede9e1] shadow-sm overflow-hidden">
-              <div
-                className="absolute top-0 left-0 right-0 h-1.5"
-                style={{
-                  background: "linear-gradient(to right, #722F37, #D4AF37)",
-                }}
-              />
-              <h3 className="font-serif-display text-xl text-[#2f2a24] mb-6 flex items-center gap-2">
-                <span>🏦</span> {accounts.usd.bankName}
-              </h3>
-
-              <div className="flex flex-col gap-4 text-sm">
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Account Name
-                  </span>
-                  <span className="font-serif-display text-base text-[#2f2a24]">
-                    {accounts.usd.accountName}
-                  </span>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Account Number
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif-display text-base text-[#2f2a24]">
-                      {accounts.usd.accountNumber}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopy(
-                          accounts.usd.accountNumber,
-                          "usd-acc"
-                        )
-                      }
-                      className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
-                      style={{
-                        background:
-                          copiedKey === "usd-acc" ? "#722F37" : "#ffffff",
-                        color:
-                          copiedKey === "usd-acc" ? "#ffffff" : "#722F37",
-                        borderColor:
-                          copiedKey === "usd-acc" ? "#722F37" : "#ede9e1",
-                      }}
-                    >
-                      {copiedKey === "usd-acc" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-
-                {/* <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Account Type
-                  </span>
-                  <span className="font-serif-display text-base text-[#2f2a24]">
-                    {accounts.usd.accountType}
-                  </span>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Routing Number
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif-display text-base text-[#2f2a24]">
-                      {accounts.usd.routingNumber}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopy(
-                          accounts.usd.routingNumber,
-                          "usd-route"
-                        )
-                      }
-                      className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
-                      style={{
-                        background:
-                          copiedKey === "usd-route" ? "#722F37" : "#ffffff",
-                        color:
-                          copiedKey === "usd-route" ? "#ffffff" : "#722F37",
-                        borderColor:
-                          copiedKey === "usd-route" ? "#722F37" : "#ede9e1",
-                      }}
-                    >
-                      {copiedKey === "usd-route" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-start py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Bank Address
-                  </span>
-                  <span className="text-xs text-[#675e54] text-right max-w-xs">
-                    {accounts.usd.bankAddress}
-                  </span>
-                </div> */}
+            {activeTab === "crypto" && (
+              <div className="relative rounded-2xl bg-white p-10 text-center shadow-[0_24px_50px_-30px_rgba(74,21,33,0.35)] ring-1 ring-line">
+                <span className="mb-4 inline-block text-4xl">₿</span>
+                <p className="font-serif-display mb-4 text-lg italic leading-relaxed text-ink-muted">
+                  We accept crypto gifts!
+                  <br />
+                  Reach out to us directly and we&apos;ll send you our wallet
+                  address.
+                </p>
               </div>
-            </div>
-          )}
+            )}
+          </div>
 
-          {activeTab === "gbp" && (
-            <div className="relative bg-[#FAF9F6] rounded-2xl p-7 sm:p-10 border border-[#ede9e1] shadow-sm overflow-hidden">
-              <div
-                className="absolute top-0 left-0 right-0 h-1.5"
-                style={{
-                  background: "linear-gradient(to right, #722F37, #D4AF37)",
-                }}
-              />
-              <h3 className="font-serif-display text-xl text-[#2f2a24] mb-6 flex items-center gap-2">
-                <span>🏦</span> {accounts.gbp.bankName}
-              </h3>
-
-              <div className="flex flex-col gap-4 text-sm">
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Account Name
-                  </span>
-                  <span className="font-serif-display text-base text-[#2f2a24]">
-                    {accounts.gbp.accountName}
-                  </span>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Account Number
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif-display text-base text-[#2f2a24]">
-                      {accounts.gbp.accountNumber}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopy(
-                          accounts.gbp.accountNumber,
-                          "gbp-acc"
-                        )
-                      }
-                      className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
-                      style={{
-                        background:
-                          copiedKey === "gbp-acc" ? "#722F37" : "#ffffff",
-                        color:
-                          copiedKey === "gbp-acc" ? "#ffffff" : "#722F37",
-                        borderColor:
-                          copiedKey === "gbp-acc" ? "#722F37" : "#ede9e1",
-                      }}
-                    >
-                      {copiedKey === "gbp-acc" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Sort Code
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif-display text-base text-[#2f2a24]">
-                      {accounts.gbp.sortCode}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopy(
-                          accounts.gbp.sortCode,
-                          "gbp-sort"
-                        )
-                      }
-                      className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
-                      style={{
-                        background:
-                          copiedKey === "gbp-sort" ? "#722F37" : "#ffffff",
-                        color:
-                          copiedKey === "gbp-sort" ? "#ffffff" : "#722F37",
-                        borderColor:
-                          copiedKey === "gbp-sort" ? "#722F37" : "#ede9e1",
-                      }}
-                    >
-                      {copiedKey === "gbp-sort" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    IBAN
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif-display text-sm text-[#2f2a24]">
-                      {accounts.gbp.iban}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopy(accounts.gbp.iban, "gbp-iban")
-                      }
-                      className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
-                      style={{
-                        background:
-                          copiedKey === "gbp-iban" ? "#722F37" : "#ffffff",
-                        color:
-                          copiedKey === "gbp-iban" ? "#ffffff" : "#722F37",
-                        borderColor:
-                          copiedKey === "gbp-iban" ? "#722F37" : "#ede9e1",
-                      }}
-                    >
-                      {copiedKey === "gbp-iban" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-start py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Bank Address
-                  </span>
-                  <span className="text-xs text-[#675e54] text-right max-w-xs">
-                    {accounts.gbp.bankAddress}
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === "eur" && (
-            <div className="relative bg-[#FAF9F6] rounded-2xl p-7 sm:p-10 border border-[#ede9e1] shadow-sm overflow-hidden">
-              <div
-                className="absolute top-0 left-0 right-0 h-1.5"
-                style={{
-                  background: "linear-gradient(to right, #722F37, #D4AF37)",
-                }}
-              />
-              <h3 className="font-serif-display text-xl text-[#2f2a24] mb-6 flex items-center gap-2">
-                <span>🏦</span> {accounts.eur.bankName}
-              </h3>
-
-              <div className="flex flex-col gap-4 text-sm">
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Account Name
-                  </span>
-                  <span className="font-serif-display text-base text-[#2f2a24]">
-                    {accounts.eur.accountName}
-                  </span>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    IBAN
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif-display text-sm text-[#2f2a24]">
-                      {accounts.eur.iban}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopy(accounts.eur.iban, "eur-iban")
-                      }
-                      className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
-                      style={{
-                        background:
-                          copiedKey === "eur-iban" ? "#722F37" : "#ffffff",
-                        color:
-                          copiedKey === "eur-iban" ? "#ffffff" : "#722F37",
-                        borderColor:
-                          copiedKey === "eur-iban" ? "#722F37" : "#ede9e1",
-                      }}
-                    >
-                      {copiedKey === "eur-iban" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-center py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    BIC / SWIFT
-                  </span>
-                  <div className="flex items-center gap-3">
-                    <span className="font-serif-display text-sm text-[#2f2a24]">
-                      {accounts.eur.bic}
-                    </span>
-                    <button
-                      onClick={() =>
-                        handleCopy(accounts.eur.bic, "eur-bic")
-                      }
-                      className="px-3 py-1 rounded text-xs tracking-wider uppercase font-semibold border transition-all"
-                      style={{
-                        background:
-                          copiedKey === "eur-bic" ? "#722F37" : "#ffffff",
-                        color:
-                          copiedKey === "eur-bic" ? "#ffffff" : "#722F37",
-                        borderColor:
-                          copiedKey === "eur-bic" ? "#722F37" : "#ede9e1",
-                      }}
-                    >
-                      {copiedKey === "eur-bic" ? "Copied!" : "Copy"}
-                    </button>
-                  </div>
-                </div>
-
-                <div className="h-px bg-[#ede9e1]" />
-
-                <div className="flex justify-between items-start py-1">
-                  <span
-                    className="text-xs font-semibold tracking-wider uppercase"
-                    style={{ color: "#722F37" }}
-                  >
-                    Bank Address
-                  </span>
-                  <span className="text-xs text-[#675e54] text-right max-w-xs">
-                    {accounts.eur.bankAddress}
-                  </span>
-                </div>
-              </div>
-            </div>
-          )}
-
-          {activeTab === "crypto" && (
-            <div className="relative bg-[#FAF9F6] rounded-2xl p-10 border border-[#ede9e1] shadow-sm text-center">
-              <span className="text-4xl mb-4 inline-block">₿</span>
-              <p className="font-serif-display italic text-lg text-[#675e54] mb-4 leading-relaxed">
-                We accept crypto gifts!
-                <br />
-                Reach out to us directly and we&apos;ll send you our wallet
-                address.
-              </p>
-            </div>
-          )}
-        </div>
+          <p className="sr-only" aria-live="polite">
+            {copiedKey ? "Copied to clipboard" : ""}
+          </p>
+        </Reveal>
 
         {/* Wishlist Link */}
-        <div className="mt-12 text-center">
-          <p className="font-serif-display italic text-[#675e54] mb-4">
+        <Reveal delay={150} className="mt-16 text-center">
+          <p className="font-serif-display mb-5 text-lg italic text-ink-muted">
             Love gifts?
           </p>
           <a
             href={registry.wishlistUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full font-bold text-xs tracking-widest uppercase transition-all duration-200 hover:-translate-y-0.5"
-            style={{
-              background: "#722F37",
-              color: "#F7E7CE",
-              border: "1px solid rgba(212, 175, 55, 0.45)",
-              boxShadow: "0 6px 20px rgba(114, 47, 55, 0.3)",
-            }}
+            className="btn btn-wine"
           >
-            <span>🎁</span> View Our Registry
+            View Our Registry
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" className="h-3 w-3" aria-hidden="true">
+              <path d="M5 11l6-6M6 5h5v5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="sr-only">(opens in a new tab)</span>
           </a>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

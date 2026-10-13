@@ -120,16 +120,22 @@ export const TOLU_MOYO_CONFIG = {
     accounts: {
       ngn: {
         currencyName: "🇳🇬 Naira",
+        bankName: "WEMA",
+        accountName: "MOYOSORE AND TOLUWANI ADEBANJO",
+        accountNumber: "0454954573",
+      },
+      /* ngn: {
+        currencyName: "🇳🇬 Naira",
         bankName: "Stanbic IBTC Bank",
         accountName: "Adebanjo Moyosore Enoch",
         accountNumber: "0058754631",
-      },
-      usd: {
+      }, */
+      /* usd: {
         currencyName: "🇳🇬 Naira",
         bankName: "United Bank of Africa",
         accountName: "Oluwaranti Toluwani Aderonke",
         accountNumber: "2093887337",
-      },
+      }, */
       /* usd: {
         currencyName: "🇺🇸 Dollar",
         bankName: "Wells Fargo",

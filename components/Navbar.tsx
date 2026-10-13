@@ -1,7 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { TOLU_MOYO_CONFIG } from "@/lib/tolu-moyo-data";
+
+const NAV_LINKS = [
+  // { href: "#story", label: "Our Story" },
+  { href: "#details", label: "Details" },
+  // { href: "#schedule", label: "Schedule" },
+  // { href: "#gallery", label: "Gallery" },
+  { href: "#registry", label: "Registry" },
+];
 
 export default function ToluMoyoNavbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -11,79 +20,89 @@ export default function ToluMoyoNavbar() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 40);
     };
-    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setMenuOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [menuOpen]);
+
+  // Solid bar whenever scrolled or the mobile menu is open, so the
+  // drawer never floats beneath a transparent bar on top of the hero.
+  const solid = scrolled || menuOpen;
+  const { couple } = TOLU_MOYO_CONFIG;
+
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 sm:px-12 py-4.5 flex items-center justify-between ${
-        scrolled
-          ? "bg-[#FAF9F6]/95 shadow-sm backdrop-blur-md text-[#2f2a24]"
-          : "bg-transparent text-white"
+      aria-label="Main"
+      className={`fixed top-0 left-0 right-0 z-50 transition-[background-color,box-shadow,padding,color] duration-500 ease-out px-5 sm:px-10 lg:px-14 flex items-center justify-between ${
+        solid
+          ? "bg-ivory/90 backdrop-blur-md text-ink py-2.5 shadow-[0_1px_0_rgba(47,42,36,0.06),0_10px_30px_-20px_rgba(47,42,36,0.25)]"
+          : "bg-transparent text-white py-4 sm:py-5"
       }`}
     >
       <a
         href="#hero"
-        className="font-serif-display text-xl sm:text-2xl tracking-wider font-semibold"
+        aria-label={`${couple.shortName} — back to top`}
+        className="relative block shrink-0"
+        onClick={() => setMenuOpen(false)}
       >
-        {scrolled
-          ? <img src={TOLU_MOYO_CONFIG.couple.logo} className="w-15 h-15" />
-          : <img src={TOLU_MOYO_CONFIG.couple.logo2} className="w-15 h-15" />
-        }
+        <span
+          className={`relative block transition-all duration-500 ease-out ${
+            solid ? "h-11 w-11 sm:h-12 sm:w-12" : "h-14 w-14 sm:h-15 sm:w-15"
+          }`}
+        >
+          <Image
+            src={couple.logo2}
+            alt=""
+            fill
+            sizes="60px"
+            preload
+            className={`object-contain transition-opacity duration-500 ${
+              solid ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <Image
+            src={couple.logo}
+            alt=""
+            fill
+            sizes="60px"
+            className={`object-contain transition-opacity duration-500 ${
+              solid ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        </span>
       </a>
 
       {/* Desktop Navigation */}
-      <ul className="hidden md:flex items-center gap-7 text-xs font-semibold tracking-widest uppercase">
-        {/* <li>
-          <a
-            href="#story"
-            className="transition-colors hover:text-[#D4AF37]"
-          >
-            Our Story
-          </a>
-        </li> */}
-        <li>
-          <a
-            href="#details"
-            className="transition-colors hover:text-[#D4AF37]"
-          >
-            Details
-          </a>
-        </li>
-        {/* <li>
-          <a
-            href="#schedule"
-            className="transition-colors hover:text-[#D4AF37]"
-          >
-            Schedule
-          </a>
-        </li> */}
-        {/* <li>
-          <a
-            href="#gallery"
-            className="transition-colors hover:text-[#D4AF37]"
-          >
-            Gallery
-          </a>
-        </li> */}
-        <li>
-          <a
-            href="#registry"
-            className="transition-colors hover:text-[#D4AF37]"
-          >
-            Registry
-          </a>
-        </li>
+      <ul className="hidden md:flex items-center gap-9 text-[11px] font-semibold tracking-[0.24em] uppercase">
+        {NAV_LINKS.map((link) => (
+          <li key={link.href}>
+            <a
+              href={link.href}
+              className={`link-underline transition-colors duration-300 ${
+                solid ? "hover:text-wine" : "text-white/90 hover:text-gold-soft"
+              }`}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
         <li>
           <a
             href="#rsvp"
-            className="px-4 py-2 rounded-full font-bold transition-all shadow-sm hover:opacity-95"
-            style={{
-              background: "#722F37",
-              color: "#F7E7CE",
-              border: "1px solid rgba(212, 175, 55, 0.45)",
-            }}
+            className={`btn min-h-0 px-6 py-2.5 ${
+              solid
+                ? "btn-wine"
+                : "border border-gold-soft/60 text-champagne hover:bg-gold-soft hover:text-wine-dark"
+            }`}
           >
             RSVP
           </a>
@@ -92,65 +111,58 @@ export default function ToluMoyoNavbar() {
 
       {/* Mobile Menu Button */}
       <button
+        type="button"
         onClick={() => setMenuOpen(!menuOpen)}
-        className="md:hidden p-2 text-sm focus:outline-none"
-        aria-label="Toggle navigation menu"
+        className="md:hidden -mr-2 flex h-11 w-11 items-center justify-center rounded-full"
+        aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+        aria-expanded={menuOpen}
+        aria-controls="mobile-menu"
       >
-        <span className="text-xl">{menuOpen ? "✕" : "☰"}</span>
+        <span className="relative block h-3 w-6" aria-hidden="true">
+          <span
+            className={`absolute left-0 h-px w-6 bg-current transition-transform duration-400 ease-out ${
+              menuOpen ? "top-1/2 rotate-45" : "top-0"
+            }`}
+          />
+          <span
+            className={`absolute left-0 h-px bg-current transition-all duration-400 ease-out ${
+              menuOpen ? "top-1/2 w-6 -rotate-45" : "top-full w-4"
+            }`}
+          />
+        </span>
       </button>
 
       {/* Mobile Drawer */}
-      {menuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-[#FAF9F6] text-[#2f2a24] shadow-lg border-t border-[#ede9e1] py-5 px-6 flex flex-col gap-4 text-xs font-semibold tracking-widest uppercase">
-          {/* <a
-            href="#story"
-            onClick={() => setMenuOpen(false)}
-            className="py-1 hover:text-[#722F37]"
-          >
-            Our Story
-          </a> */}
-          <a
-            href="#details"
-            onClick={() => setMenuOpen(false)}
-            className="py-1 hover:text-[#722F37]"
-          >
-            Details
-          </a>
-          {/* <a
-            href="#schedule"
-            onClick={() => setMenuOpen(false)}
-            className="py-1 hover:text-[#722F37]"
-          >
-            Schedule
-          </a> */}
-         {/*  <a
-            href="#gallery"
-            onClick={() => setMenuOpen(false)}
-            className="py-1 hover:text-[#722F37]"
-          >
-            Gallery
-          </a> */}
-          <a
-            href="#registry"
-            onClick={() => setMenuOpen(false)}
-            className="py-1 hover:text-[#722F37]"
-          >
-            Registry
-          </a>
+      <div
+        id="mobile-menu"
+        className={`md:hidden absolute top-full left-0 right-0 overflow-hidden bg-ivory text-ink border-t border-line shadow-[0_24px_40px_-24px_rgba(47,42,36,0.35)] transition-[max-height,opacity] duration-500 ease-out ${
+          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0 pointer-events-none"
+        }`}
+        inert={!menuOpen}
+      >
+        <div className="flex flex-col px-6 pt-3 pb-7">
+          {NAV_LINKS.map((link) => (
+            <a
+              key={link.href}
+              href={link.href}
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center justify-between border-b border-line-soft py-4 font-serif-display text-2xl text-ink transition-colors hover:text-wine"
+            >
+              {link.label}
+              <span className="text-gold text-sm" aria-hidden="true">
+                →
+              </span>
+            </a>
+          ))}
           <a
             href="#rsvp"
             onClick={() => setMenuOpen(false)}
-            className="py-2.5 text-center rounded-full font-bold mt-2"
-            style={{
-              background: "#722F37",
-              color: "#F7E7CE",
-              border: "1px solid rgba(212, 175, 55, 0.45)",
-            }}
+            className="btn btn-wine mt-6 w-full"
           >
             RSVP Now
           </a>
         </div>
-      )}
+      </div>
     </nav>
   );
 }
