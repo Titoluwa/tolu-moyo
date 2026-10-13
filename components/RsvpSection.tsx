@@ -96,9 +96,9 @@ export default function ToluMoyoRsvpSection() {
 
       <div className="relative z-10 mx-auto max-w-2xl px-2">
         <Reveal>
-          <p className="eyebrow mb-4 text-gold-soft">
+          {/* <p className="eyebrow mb-4 text-gold-soft">
             Don&apos;t Miss It
-          </p>
+          </p> */}
 
           <h2 className="section-title text-white">
             Will You Join{" "}
