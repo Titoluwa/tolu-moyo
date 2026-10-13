@@ -114,13 +114,16 @@ export default function ToluMoyoRsvpSection() {
             <p className="eyebrow text-[10px] text-gold-soft">
               A Small Request
             </p>
-            <p className="font-serif-display mt-2 text-sm italic leading-relaxed text-white/80 sm:text-[15px]">
-              As much as we love your little ones, we have decided to keep our
+            <p className="font-serif-display mt-2 text-sm leading-relaxed text-white/80 sm:text-[16px]">
+              Kindly RSVP to let us know if you’ll be celebrating with us. 
+              Your response is important as it helps us plan seating
+              and other wedding arrangements to make the day special for everyone.
+            {/* As much as we love your little ones, we have decided to keep our
               wedding celebrations as an adults-only event. We hope this gives
               you enough time to make arrangements, and we truly appreciate your
-              understanding.
+              understanding. */}
             </p>
-            <p className="mt-2 text-xs tracking-wider uppercase text-white/50">
+            <p className="mt-2 text-sm tracking-wider capitalize text-white/50">
               We can&apos;t wait to celebrate with you.
             </p>
           </div>
