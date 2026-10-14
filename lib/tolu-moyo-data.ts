@@ -114,8 +114,8 @@ export const TOLU_MOYO_CONFIG = {
     }, */
   ],
   registry: {
-    intro:
-      "Your presence is the greatest gift of all. Is it? Please bless us, here are our account details across currencies.",
+    intro: "Your presence is our greatest gift! If you’d like to bless us further, you can send a monetary gift or choose something from our gift registry. Thank you for your love and generosity!",
+      // "Your presence is the greatest gift of all. Is it? Please bless us, here are our account details across currencies.",
     wishlistUrl: "https://www.thingstogetus.com/2400054ac1f08",
     accounts: {
       ngn: {
