@@ -12,6 +12,8 @@ interface RsvpRequestBody {
   categoryLabel?: string;
   plusOne: string;
   plusOneName?: string;
+  comingWithChildren?: string;
+  childrenCount?: string | number;
 }
 
 const ATTEND_LABELS: Record<string, string> = {
@@ -32,6 +34,8 @@ export async function POST(request: Request) {
       categoryLabel,
       plusOne,
       plusOneName = "",
+      comingWithChildren = "no",
+      childrenCount = "0",
     } = body;
 
     if (!name || !attend || !category) {
@@ -51,6 +55,17 @@ export async function POST(request: Request) {
     const hasPlusOne = plusOne === "yes" || plusOne === "true";
     const finalPlusOne = hasPlusOne ? "Yes" : "No";
     const finalPlusOneName = hasPlusOne ? plusOneName.trim() : "";
+
+    const hasChildren =
+      comingWithChildren === "yes" || comingWithChildren === "true";
+    const finalComingWithChildren = hasChildren ? "Yes" : "No";
+    const parsedChildrenCount = parseInt(String(childrenCount), 10);
+    const finalChildrenCount = hasChildren
+      ? isNaN(parsedChildrenCount) || parsedChildrenCount < 1
+        ? "1"
+        : String(parsedChildrenCount)
+      : "0";
+
     const attendanceStatus = ATTEND_LABELS[attend] || attend;
     const resolvedCategory = categoryLabel || category;
 
@@ -76,7 +91,7 @@ export async function POST(request: Request) {
 
     const sheets = google.sheets({ version: "v4", auth });
 
-    // The columns: Fullname | Phone Number | Email Address | Category | Will You Attend? * | Plus one? | Name of Plus One
+    // The columns: Fullname | Phone Number | Email Address | Category | Will You Attend? * | Plus one? | Name of Plus One | Coming with Children? | Number of Children
     const rowValues = [
       name.trim(),
       phone.trim(),
@@ -85,11 +100,13 @@ export async function POST(request: Request) {
       attendanceStatus,
       finalPlusOne,
       finalPlusOneName,
+      finalComingWithChildren,
+      hasChildren ? finalChildrenCount : "0",
     ];
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
-      range: "Sheet1!A:G",
+      range: "Sheet1!A:I",
       valueInputOption: "USER_ENTERED",
       insertDataOption: "INSERT_ROWS",
       requestBody: {
@@ -146,20 +163,31 @@ export async function POST(request: Request) {
                   ? `<p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👥 Plus One:</strong> Yes (${finalPlusOneName})</p>`
                   : `<p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👥 Plus One:</strong> ${finalPlusOne}</p>`
               }
+              ${
+                hasChildren
+                  ? `<p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👶 Children:</strong> Yes (${finalChildrenCount})</p>`
+                  : `<p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👶 Children:</strong> No</p>`
+              }
               <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>🏷️ Category:</strong> ${resolvedCategory}</p>
             </div>
           `
             : "";
 
-        const htmlContent =  ThankYouMail({name, greetingMessage, detailsSection});
-        
-        const textContent = textcontent({name, greetingMessage, isAttending, isMaybe, hasPlusOne, finalPlusOneName, resolvedCategory, finalPlusOne});
-          // <div style="background: #FAF5EB; border-left: 4px solid #D4AF37; padding: 14px 18px; margin: 20px 0; border-radius: 4px;">
-          //               <p style="margin: 0; color: #3B121A; font-size: 13px; line-height: 1.5;">
-          //                 <strong>A Gentle Reminder 🤍</strong><br />
-          //                 As much as we love your little ones, our celebrations will be an adults-only event. We appreciate your understanding!
-          //               </p>
-          //             </div>
+        const htmlContent = ThankYouMail({ name, greetingMessage, detailsSection });
+
+        const textContent = textcontent({
+          name,
+          greetingMessage,
+          isAttending,
+          isMaybe,
+          hasPlusOne,
+          finalPlusOneName,
+          resolvedCategory,
+          finalPlusOne,
+          hasChildren,
+          finalChildrenCount,
+        });
+
         await transporter.sendMail({
           from: smtpFrom,
           to: email,

@@ -21,7 +21,7 @@ function doPost(e) {
       sheet = SpreadsheetApp.getActiveSpreadsheet().insertSheet(SHEET_NAME);
       sheet.appendRow([
         "Timestamp", "Full Name", "WhatsApp", "Email", "Attending",
-        "Plus Ones", "Plus One Names", "Meal Choice", "Song Request", "Well Wishes"
+        "Plus Ones", "Plus One Names", "Coming with Children", "Number of Children", "Meal Choice", "Song Request", "Well Wishes"
       ]);
     }
 
@@ -39,6 +39,8 @@ function doPost(e) {
       data.attending || "",
       data.plusOnes || "0",
       plusOneNames,
+      data.comingWithChildren || "No",
+      data.childrenCount || "0",
       data.meal || "",
       data.songRequest || "",
       data.message || ""

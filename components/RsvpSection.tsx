@@ -14,6 +14,8 @@ export default function ToluMoyoRsvpSection() {
     category: "",
     plusOne: "no",
     plusOneName: "",
+    comingWithChildren: "no",
+    childrenCount: "",
   });
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
@@ -36,6 +38,14 @@ export default function ToluMoyoRsvpSection() {
       return;
     }
 
+    if (formData.comingWithChildren === "yes") {
+      const count = parseInt(formData.childrenCount, 10);
+      if (!formData.childrenCount || isNaN(count) || count < 1) {
+        setError("Please specify the number of children attending (at least 1).");
+        return;
+      }
+    }
+
     setLoading(true);
     setError(null);
 
@@ -49,6 +59,10 @@ export default function ToluMoyoRsvpSection() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...formData,
+          childrenCount:
+            formData.comingWithChildren === "yes"
+              ? formData.childrenCount
+              : "0",
           categoryLabel: selectedCat?.label || formData.category,
         }),
       });
@@ -332,6 +346,61 @@ export default function ToluMoyoRsvpSection() {
                   />
                 </div>
               )}
+
+              <div
+                className={`grid grid-cols-1 gap-5 ${
+                  formData.comingWithChildren === "yes" ? "sm:grid-cols-2" : ""
+                }`}
+              >
+                <div>
+                  <label htmlFor="rsvp-children" className="field-label">
+                    Coming with Children?
+                  </label>
+                  <select
+                    id="rsvp-children"
+                    value={formData.comingWithChildren}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        comingWithChildren: e.target.value,
+                        childrenCount:
+                          e.target.value === "no"
+                            ? ""
+                            : formData.childrenCount || "1",
+                      })
+                    }
+                    className="field"
+                  >
+                    <option value="no">No</option>
+                    <option value="yes">Yes</option>
+                  </select>
+                </div>
+
+                {formData.comingWithChildren === "yes" && (
+                  <div className="animate-fadeIn">
+                    <label htmlFor="rsvp-children-count" className="field-label">
+                      Number of Children <span className="req">*</span>
+                    </label>
+                    <input
+                      id="rsvp-children-count"
+                      type="number"
+                      min="1"
+                      max="15"
+                      step="1"
+                      required={formData.comingWithChildren === "yes"}
+                      value={formData.childrenCount}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          childrenCount: e.target.value,
+                        })
+                      }
+                      placeholder="e.g. 1"
+                      className="field"
+                    />
+                  </div>
+                )}
+              </div>
 
               <button
                 type="submit"

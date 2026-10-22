@@ -12,6 +12,8 @@ interface DetailsSectionParams {
     hasPlusOne: boolean;
     finalPlusOneName: string;
     finalPlusOne: string;
+    hasChildren?: boolean;
+    finalChildrenCount?: string;
     resolvedCategory: string;
 }
 
@@ -74,8 +76,19 @@ export function ThankYouMail({
     `;
 }
 
-export function textcontent({ name, greetingMessage, isAttending, isMaybe, hasPlusOne, finalPlusOneName, resolvedCategory, finalPlusOne }: DetailsSectionParams): string {
-    return`
+export function textcontent({
+    name,
+    greetingMessage,
+    isAttending,
+    isMaybe,
+    hasPlusOne,
+    finalPlusOneName,
+    resolvedCategory,
+    finalPlusOne,
+    hasChildren,
+    finalChildrenCount,
+}: DetailsSectionParams): string {
+    return `
         Dear ${name},
 
         ${greetingMessage}
@@ -88,9 +101,8 @@ export function textcontent({ name, greetingMessage, isAttending, isMaybe, hasPl
         - Time: 10:00 AM
         - Venue: Rhema Chapel International Churches, Ile-Ife, Osun State
         - Plus One: ${hasPlusOne && finalPlusOneName ? `Yes (${finalPlusOneName})` : finalPlusOne}
+        - Children: ${hasChildren ? `Yes (${finalChildrenCount || "1"})` : "No"}
         - Category: ${resolvedCategory}
-
-        A gentle reminder: Celebrations will be an adults-only event.
         `
             : ""
         }
