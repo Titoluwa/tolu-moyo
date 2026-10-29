@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { google } from "googleapis";
 import nodemailer from "nodemailer";
+import path from "node:path";
+import fs from "node:fs";
 import { ThankYouMail, textcontent } from "@/lib/thankyou-mail";
 
 interface RsvpRequestBody {
@@ -45,7 +47,7 @@ export async function POST(request: Request) {
       );
     }
 
-    if (!email || !email.includes("@")) {
+    if (!email?.includes("@")) {
       return NextResponse.json(
         { error: "A valid email address is required." },
         { status: 400 }
@@ -59,12 +61,14 @@ export async function POST(request: Request) {
     const hasChildren =
       comingWithChildren === "yes" || comingWithChildren === "true";
     const finalComingWithChildren = hasChildren ? "Yes" : "No";
-    const parsedChildrenCount = parseInt(String(childrenCount), 10);
-    const finalChildrenCount = hasChildren
-      ? isNaN(parsedChildrenCount) || parsedChildrenCount < 1
-        ? "1"
-        : String(parsedChildrenCount)
-      : "0";
+    const parsedChildrenCount = Number.parseInt(String(childrenCount), 10);
+    let finalChildrenCount = "0";
+    if (hasChildren) {
+      finalChildrenCount =
+        Number.isNaN(parsedChildrenCount) || parsedChildrenCount < 1
+          ? "1"
+          : String(parsedChildrenCount);
+    }
 
     const attendanceStatus = ATTEND_LABELS[attend] || attend;
     const resolvedCategory = categoryLabel || category;
@@ -116,7 +120,7 @@ export async function POST(request: Request) {
 
     // 2. Send "Thank you for RSVPing" Email via SMTP
     const smtpHost = process.env.SMTP_HOST;
-    const smtpPort = parseInt(process.env.SMTP_PORT || "587", 10);
+    const smtpPort = Number.parseInt(process.env.SMTP_PORT || "587", 10);
     const smtpSecure = process.env.SMTP_SECURE === "true";
     const smtpUser = process.env.SMTP_USER;
     const smtpPass = process.env.SMTP_PASSWORD;
@@ -134,44 +138,58 @@ export async function POST(request: Request) {
           },
         });
 
-        const isAttending = attend === "yes";
-        const isMaybe = attend === "maybe";
+        const isAttending = attend?.trim().toLowerCase() === "yes";
+        const isMaybe = attend?.trim().toLowerCase() === "maybe";
 
-        const subject = isAttending
-          ? "Thank you for RSVPing! We can't wait to celebrate with you — Tolu & Moyo 💍"
-          : isMaybe
-          ? "Thank you for RSVPing — Tolu & Moyo's Wedding"
-          : "Thank you for letting us know — Tolu & Moyo's Wedding";
+        let subject = "Thank you for letting us know — Tolu & Moyo's Wedding";
+        if (isAttending) {
+          subject =
+            "Thank you for RSVPing! We can't wait to celebrate with you — Tolu & Moyo 💍";
+        } else if (isMaybe) {
+          subject = "Thank you for RSVPing — Tolu & Moyo's Wedding";
+        }
 
-        const greetingMessage = isAttending
-          ? `We are overjoyed that you will be joining us to celebrate our love and new beginning!`
-          : isMaybe
-          ? `Thank you for taking the time to RSVP. We understand you are still finalizing your plans, and we hope you can make it!`
-          : `Thank you for letting us know you won't be able to make it. You will be dearly missed, and we truly appreciate your love and prayers!`;
+        let greetingMessage =
+          "Thank you for letting us know you won't be able to make it. You will be dearly missed, and we truly appreciate your love and prayers!";
+        if (isAttending) {
+          greetingMessage =
+            "We are overjoyed that you will be joining us to celebrate our love and new beginning! Please find your official wedding invitation attached to this email.";
+        } else if (isMaybe) {
+          greetingMessage =
+            "Thank you for taking the time to RSVP. We understand you are still finalizing your plans, and we hope you can make it!";
+        }
 
-        const detailsSection =
-          isAttending || isMaybe
-            ? `
+        let detailsSection = "";
+        if (isAttending || isMaybe) {
+          const plusOneDetail =
+            hasPlusOne && finalPlusOneName
+              ? `Yes (${finalPlusOneName})`
+              : finalPlusOne;
+
+          const childrenDetail = hasChildren
+            ? `Yes (${finalChildrenCount})`
+            : "No";
+
+          const invitationNotice = isAttending
+            ? `<div style="margin-top: 16px; padding-top: 14px; border-top: 1px dashed #d5c8b2; color: #722F37; font-size: 14px;">
+                💌 <strong>Invitation Attached:</strong> Please find your official wedding invitation attached to this email.
+              </div>`
+            : "";
+
+          detailsSection = `
             <div style="background-color: #f7f3ee; border-radius: 12px; padding: 24px; margin: 24px 0; border: 1px solid #e8dec8;">
               <h3 style="margin-top: 0; color: #722F37; font-size: 16px; text-transform: uppercase; letter-spacing: 1px;">Wedding Details</h3>
               <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>📅 Date:</strong> Saturday, 19th December 2026</p>
               <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>⏰ Time:</strong> 10:00 AM</p>
               <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>📍 Venue:</strong> Rhema Chapel International Churches, Ile-Ife, Osun State</p>
               <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>✨ Dress Code:</strong> Champagne Gold &amp; Wine (English / Trad)</p>
-              ${
-                hasPlusOne && finalPlusOneName
-                  ? `<p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👥 Plus One:</strong> Yes (${finalPlusOneName})</p>`
-                  : `<p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👥 Plus One:</strong> ${finalPlusOne}</p>`
-              }
-              ${
-                hasChildren
-                  ? `<p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👶 Children:</strong> Yes (${finalChildrenCount})</p>`
-                  : `<p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👶 Children:</strong> No</p>`
-              }
+              <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👥 Plus One:</strong> ${plusOneDetail}</p>
+              <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>👶 Children:</strong> ${childrenDetail}</p>
               <p style="margin: 8px 0; color: #3d3d3d; font-size: 15px;"><strong>🏷️ Category:</strong> ${resolvedCategory}</p>
+              ${invitationNotice}
             </div>
-          `
-            : "";
+          `;
+        }
 
         const htmlContent = ThankYouMail({ name, greetingMessage, detailsSection });
 
@@ -188,12 +206,38 @@ export async function POST(request: Request) {
           finalChildrenCount,
         });
 
+        // Attach invitation PDF only when RSVP is Yes
+        const attachments: Array<{
+          filename: string;
+          path: string;
+          contentType?: string;
+        }> = [];
+
+        if (isAttending) {
+          const invitationPath = path.join(
+            process.cwd(),
+            "public",
+            "White Wedding Invitation.pdf"
+          );
+
+          if (fs.existsSync(invitationPath)) {
+            attachments.push({
+              filename: "White Wedding Invitation.pdf",
+              path: invitationPath,
+              contentType: "application/pdf",
+            });
+          } else {
+            console.warn(`Invitation PDF not found at path: ${invitationPath}`);
+          }
+        }
+
         await transporter.sendMail({
           from: smtpFrom,
           to: email,
           subject,
           text: textContent,
           html: htmlContent,
+          ...(attachments.length > 0 ? { attachments } : {}),
         });
       } catch (mailError) {
         console.error("Failed to send RSVP confirmation email:", mailError);

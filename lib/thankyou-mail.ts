@@ -102,7 +102,7 @@ export function textcontent({
         - Venue: Rhema Chapel International Churches, Ile-Ife, Osun State
         - Plus One: ${hasPlusOne && finalPlusOneName ? `Yes (${finalPlusOneName})` : finalPlusOne}
         - Children: ${hasChildren ? `Yes (${finalChildrenCount || "1"})` : "No"}
-        - Category: ${resolvedCategory}
+        - Category: ${resolvedCategory}${isAttending ? "\n        - Invitation: Attached (White Wedding Invitation.pdf)" : ""}
         `
             : ""
         }
